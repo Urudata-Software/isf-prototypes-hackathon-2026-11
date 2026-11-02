@@ -102,9 +102,18 @@ Antes de empezar: perfil **Calidad / Producción**, pantalla **Tablero**, demo r
 | 10 | Clic en el **sobre** (arriba a la derecha) | "Y queda registrado qué se avisó, a quién y cuándo. Esto es oro para una auditoría." |
 | 11 | Selector **Viendo como → Comercio** | "Ahora soy el encargado del Supermercado El Trébol. Abro el sistema y lo primero que veo es esto: aviso de retiro, cuántas unidades, qué hacer." |
 | 12 | Señalá la tabla de lotes | "Y además veo qué me vence esta semana. La leche de mañana ya la tengo en rojo." |
-| 13 | *(Cierre)* | "Del teléfono descompuesto a minutos. Loti: dónde está cada lote, a qué temperatura estuvo y cuándo vence, de la fábrica a la góndola." |
+| 13 | Selector **Viendo como → Logística**, clic en **Simular falla de frío en Camión 2** | "Pero lo mejor es que esto no llegue a pasar. Este es el Camión 2, en ruta ahora mismo." *(La temperatura sube sola en el gráfico; en 5 segundos salta la alerta roja.)* |
+| 14 | Clic en **Frenar entregas y volver a planta** | "Loti avisa antes de la próxima entrega. Un clic, y ningún comercio recibe producto fuera de rango. Pasamos de reaccionar a evitar." |
+| 15 | Selector **Viendo como → Gerencia** | "Y Gerencia lo ve en plata: cuánto hay en riesgo, cuánto se sacó de la venta y 156 mil pesos de mercadería que frenamos antes de entregarla." |
+| 16 | *(Cierre)* | "Del teléfono descompuesto a minutos. Loti: dónde está cada lote, a qué temperatura estuvo y cuándo vence, de la fábrica a la góndola." |
 
-Si sobra tiempo: **Vencimientos** (semáforo) o **Logística** (el Camión 3 ya tiene la tarea de recolectar en los seis comercios).
+Los pasos 13 a 15 suman unos 50 segundos. Si te pasás de 3 minutos, acortá los pasos 6 y 12.
+
+Si sobra tiempo:
+- **Registrar lote** (Calidad, botón azul del Tablero): das de alta un lote en vivo. Si cargás una temperatura de control mayor a 8 °C, sale con alerta.
+- **Vencimientos:** el semáforo de lo que vence en planta y en comercios.
+
+Los precios de los productos son valores de demo en pesos uruguayos (por ejemplo, yogur bebible 1 L a $ 95 y jamón 200 g a $ 180). Si tenés precios reales, se cambian en una sola lista dentro de `lote360.html`.
 
 ---
 

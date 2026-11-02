@@ -220,6 +220,17 @@ svg.chart{width:100%;height:auto;display:block}
 .truck .row span:first-child{color:var(--muted)}
 .task{margin-top:14px;border-radius:10px;padding:12px 14px;font-size:.92rem}
 .task.bad{background:var(--bad-bg);color:#7d1117;border:1px solid var(--bad-line)}
+.task.ok{background:var(--ok-bg);color:#0f5133;border:1px solid var(--ok-line)}
+.live-dot{width:8px;height:8px;background:var(--bad);animation:livePulse 1s ease-in-out infinite}
+@keyframes livePulse{50%{opacity:.25}}
+.form{padding:10px 26px 4px;display:grid;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.9rem;color:var(--ink2)}
+.field input,.field select{font:inherit;font-weight:500;font-size:1rem;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink)}
+.field input:focus,.field select:focus{outline:2px solid var(--primary-line);border-color:var(--primary)}
+.field .err{color:var(--bad);font-size:.82rem}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hint{font-size:.9rem;color:var(--muted)}
+.hint.bad{color:var(--bad);font-weight:600}
 
 /* Modal, drawer, toast */
 .overlay{position:fixed;inset:0;background:rgba(12,26,45,.45);z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;animation:fade .2s}
@@ -251,6 +262,8 @@ svg.chart{width:100%;height:auto;display:block}
 #toasts{position:fixed;top:84px;right:24px;z-index:70;display:flex;flex-direction:column;gap:10px}
 .toast{display:flex;align-items:center;gap:12px;background:#0f2c4f;color:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 10px 30px rgba(0,0,0,.25);font-weight:600;animation:slideL .3s ease;font-size:1rem}
 .toast .t-ic{width:30px;height:30px;border-radius:50%;background:var(--ok-dot);display:grid;place-items:center}
+.toast.bad{background:var(--bad)}
+.toast.bad .t-ic{background:rgba(255,255,255,.2)}
 .reset{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:30;background:transparent;border:0;color:#9aa8bb;font-size:.78rem;display:flex;align-items:center;gap:5px;padding:6px 8px;border-radius:8px}
 .reset:hover{color:var(--ink2);background:#fff}
 
@@ -275,7 +288,7 @@ svg.chart{width:100%;height:auto;display:block}
 @media (pointer:coarse){#mascot{display:none}}
 
 @media (max-width:1100px){.g4{grid-template-columns:1fr 1fr}.g-dash,.g2{grid-template-columns:1fr}.today{display:none}}
-@media (max-width:760px){html{font-size:15px}.topbar-in{height:auto;flex-wrap:wrap;padding:10px 16px;gap:10px}main{padding:18px 16px 70px}.g4{grid-template-columns:1fr}.steps{grid-template-columns:1fr;gap:16px;text-align:left}.step::before{display:none}.lot-head{flex-direction:column}.lot-actions{align-items:flex-start}.table-scroll{overflow-x:auto}.modal-b{padding-left:26px}}
+@media (max-width:760px){html{font-size:15px}.topbar-in{height:auto;flex-wrap:wrap;padding:10px 16px;gap:10px}main{padding:18px 16px 70px}.g4{grid-template-columns:1fr}.steps{grid-template-columns:1fr;gap:16px;text-align:left}.step::before{display:none}.lot-head{flex-direction:column}.lot-actions{align-items:flex-start}.table-scroll{overflow-x:auto}.modal-b{padding-left:26px}.field-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -404,20 +417,22 @@ const plural = (n, a, b) => `${n} ${n === 1 ? a : b}`;
 
 /* ===================== Datos simulados ===================== */
 const PRODUCTS = {
-  YBF: { name: 'Yogur bebible frutilla 1 L', shelf: 21 },
-  YBV: { name: 'Yogur bebible vainilla 1 L', shelf: 21 },
-  LFE: { name: 'Leche fresca entera 1 L', shelf: 7 },
-  QCR: { name: 'Queso crema 300 g', shelf: 30 },
-  CRL: { name: 'Crema de leche 250 ml', shelf: 15 },
-  PCH: { name: 'Postre de chocolate 120 g ×4', shelf: 20 },
-  JAM: { name: 'Jamón cocido feteado 200 g', shelf: 25 },
-  RAV: { name: 'Ravioles de ricotta 500 g', shelf: 25 },
-  ENS: { name: 'Ensalada lista mix 250 g', shelf: 7 },
-  JUG: { name: 'Jugo de naranja exprimido 1 L', shelf: 12 },
-  SAL: { name: 'Salchichas tipo viena ×8', shelf: 40 },
-  TAR: { name: 'Masa para tartas ×2', shelf: 35 },
-  HUM: { name: 'Hummus clásico 250 g', shelf: 30 },
+  // price = precio de venta al comercio por unidad, en pesos uruguayos (valores de demo)
+  YBF: { name: 'Yogur bebible frutilla 1 L', shelf: 21, price: 95 },
+  YBV: { name: 'Yogur bebible vainilla 1 L', shelf: 21, price: 95 },
+  LFE: { name: 'Leche fresca entera 1 L', shelf: 7, price: 52 },
+  QCR: { name: 'Queso crema 300 g', shelf: 30, price: 145 },
+  CRL: { name: 'Crema de leche 250 ml', shelf: 15, price: 89 },
+  PCH: { name: 'Postre de chocolate 120 g ×4', shelf: 20, price: 120 },
+  JAM: { name: 'Jamón cocido feteado 200 g', shelf: 25, price: 180 },
+  RAV: { name: 'Ravioles de ricotta 500 g', shelf: 25, price: 230 },
+  ENS: { name: 'Ensalada lista mix 250 g', shelf: 7, price: 110 },
+  JUG: { name: 'Jugo de naranja exprimido 1 L', shelf: 12, price: 140 },
+  SAL: { name: 'Salchichas tipo viena ×8', shelf: 40, price: 160 },
+  TAR: { name: 'Masa para tartas ×2', shelf: 35, price: 98 },
+  HUM: { name: 'Hummus clásico 250 g', shelf: 30, price: 175 },
 };
+const money = n => '$ ' + Math.round(n).toLocaleString('es-UY');
 const STORES = {
   c1: { name: 'Supermercado El Trébol', barrio: 'Buceo', depto: 'Montevideo', email: 'pedidos@eltrebol.demo' },
   c2: { name: 'Autoservice La Esquina', barrio: 'Pocitos', depto: 'Montevideo', email: 'compras@laesquina.demo' },
@@ -430,7 +445,7 @@ const STORES = {
 };
 const TRUCKS = {
   T1: { name: 'Camión 1', route: 'Ruta Canelones', driver: 'Martín Suárez', plate: 'SBA 4127', stops: '2 de 5 entregas' },
-  T2: { name: 'Camión 2', route: 'Ruta Montevideo Centro', driver: 'Lucía Ferreira', plate: 'SBC 2280', stops: '1 de 4 entregas' },
+  T2: { name: 'Camión 2', route: 'Ruta Montevideo Centro', driver: 'Lucía Ferreira', plate: 'SBC 2280', stops: '1 de 4 entregas', next: 'Almacén Don Tito (Malvín)' },
   T3: { name: 'Camión 3', route: 'Ruta Montevideo Este', driver: 'Diego Pereira', plate: 'SBD 9035', stops: 'Ruta completada' },
 };
 const QUALITY = { name: 'Calidad · Planta Canelones', email: 'calidad@loti.demo' };
@@ -505,9 +520,17 @@ function buildLot(s, seed) {
     temps.push({ t: d, v: Math.round(v * 10) / 10 });
   }
 
-  // Desvíos fuera de 2–8 °C
+  return {
+    id: s.id, product: prod.name, productKey: s.p, price: prod.price, made, expires, empAt, camAt, loadAt, deliveries, units,
+    loc: s.loc, place: s.place, atPacking: !!s.atPacking, truck: s.truck || null, temps, excursion: findExcursion(temps),
+    status: s.loc, blockedAt: null,
+  };
+}
+
+// Desvíos fuera de 2–8 °C
+function findExcursion(temps) {
   let excursion = null;
-  temps.forEach((r, i) => {
+  temps.forEach(r => {
     if (r.v > 8 || r.v < 2) {
       if (!excursion) excursion = { from: r.t, to: r.t, max: r.v, peakAt: r.t };
       excursion.to = r.t;
@@ -515,13 +538,13 @@ function buildLot(s, seed) {
     }
   });
   if (excursion) excursion.minutes = Math.round((excursion.to - excursion.from) / MIN);
-
-  return {
-    id: s.id, product: prod.name, productKey: s.p, made, expires, empAt, camAt, loadAt, deliveries, units,
-    loc: s.loc, place: s.place, atPacking: !!s.atPacking, truck: s.truck || null, temps, excursion,
-    status: s.loc, blockedAt: null,
-  };
+  return excursion;
 }
+const lotValue = l => l.units * l.price;
+// "9,2 °C durante 40 min", o "control de 9,5 °C" si fue una sola lectura
+const excText = e => e.minutes ? `${t1(e.max)} °C durante ${e.minutes} min` : `control de ${t1(e.max)} °C`;
+const excPlace = l => l.truck && l.loc !== "planta" ? TRUCKS[l.truck].name : l.place;
+const excInTruck = l => l.excursion && l.loadAt && +l.excursion.from >= +l.loadAt;
 
 function initialState() {
   const lots = LOT_SPECS.map(buildLot);
@@ -542,7 +565,10 @@ function initialState() {
     { id: 'A5', level: 'info', truck: 'T1', at: at(-1, 16, 20), state: 'resuelta',
       title: 'Camión 1: puerta abierta 4 min', text: 'Las Piedras · la temperatura volvió al rango en 6 min (máx. 7,1 °C)' },
   ];
-  return { lots, alerts, notifications: [], profile: 'calidad', storeId: 'c1', filter: 'todos', search: '', vencTab: 'todos', justBlocked: null };
+  return { lots, alerts, notifications: [], profile: 'calidad', storeId: 'c1', filter: 'todos', search: '', vencTab: 'todos', justBlocked: null,
+    live: null,          // simulación de falla de frío en ruta: { truck, step, timer }
+    truckHalted: {},     // camiones con entregas frenadas
+    nextLotNum: 2424 };
 }
 let S = initialState();
 const getLot = id => S.lots.find(l => l.id === id);
@@ -592,6 +618,7 @@ function statusBadge(l) {
   if (l.status === 'bloqueado') return `<span class="badge b-bloqueado">${icon('lock', 14, 2.4)}Bloqueado – En retiro</span>`;
   if (l.status === 'planta') return `<span class="badge b-planta">${icon('factory', 14, 2.2)}En planta</span>`;
   if (l.status === 'transito') return `<span class="badge b-transito">${icon('truck', 14, 2.2)}En tránsito</span>`;
+  if (l.status === 'retenido') return `<span class="badge b-warn">${icon('truck', 14, 2.2)}Retenido · vuelve a planta</span>`;
   return `<span class="badge b-comercios">${icon('store', 14, 2.2)}En comercios</span>`;
 }
 function coldBadge(l) {
@@ -619,7 +646,7 @@ function filteredLots() {
     if (S.filter === 'todos') return true;
     if (S.filter === 'alerta') return alertLots.has(l.id) || !!l.excursion;
     return l.status === S.filter;
-  }).sort((a, b) => (b.id === 'L-2411') - (a.id === 'L-2411') || (b.status === 'bloqueado') - (a.status === 'bloqueado') || a.id.localeCompare(b.id));
+  }).sort((a, b) => (b.id === 'L-2411') - (a.id === 'L-2411') || !!b.isNew - !!a.isNew || (b.status === 'bloqueado') - (a.status === 'bloqueado') || a.id.localeCompare(b.id));
 }
 function lotRows() {
   const rows = filteredLots();
@@ -637,11 +664,15 @@ function viewTablero() {
   const soonPlant = soon.filter(l => l.loc === 'planta').length, soonStores = soon.length - soonPlant;
   const okLots = S.lots.filter(l => !l.excursion).length;
   const pct = Math.round(okLots / S.lots.length * 100);
-  const alerts = [...S.alerts].sort((a, b) => (a.level === 'critica' ? -1 : 0) - (b.level === 'critica' ? -1 : 0) || (a.state === 'resuelta') - (b.state === 'resuelta'));
+  const held = by('retenido');
+  const rank = a => a.level === 'critica' ? (a.state === 'abierta' ? 0 : 1) : a.state === 'resuelta' ? 3 : 2;
+  const alerts = [...S.alerts].sort((a, b) => rank(a) - rank(b));
   return `
-  <div class="page-head"><div><h1>Tablero de trazabilidad</h1><div class="sub">De la fábrica a la góndola, en tiempo real · ${PLANT}</div></div></div>
+  <div class="page-head"><div><h1>Tablero de trazabilidad</h1><div class="sub">De la fábrica a la góndola, en tiempo real · ${PLANT}</div></div>
+    ${S.profile === 'calidad' ? `<button class="btn btn-primary" id="new-lot-btn">${icon('box', 18)}Registrar lote</button>` : ''}</div>
+  ${S.profile === 'gerencia' ? moneyRow() : ''}
   <div class="grid g4">
-    ${kpi('box', '', 'Lotes activos', S.lots.length, `${by('planta')} en planta · ${by('transito')} en tránsito · ${by('comercios')} en comercios${recalls ? ` · <b style="color:var(--bad)">${recalls} en retiro</b>` : ''}`)}
+    ${kpi('box', '', 'Lotes activos', S.lots.length, `${by('planta')} en planta · ${by('transito')} en tránsito · ${by('comercios')} en comercios${held ? ` · <b style="color:var(--warn)">${held} retenidos</b>` : ''}${recalls ? ` · <b style="color:var(--bad)">${recalls} en retiro</b>` : ''}`)}
     ${kpi('alert', open.length ? 'bad' : 'ok', 'Alertas abiertas', open.length, crit ? `<b style="color:var(--bad)">${plural(crit, 'crítica', 'críticas')}</b>` : recalls ? `${plural(recalls, 'retiro', 'retiros')} en curso` : 'Sin alertas críticas')}
     ${kpi('calendar', 'warn', 'Vencen en 7 días', soon.length, `${soonPlant} en planta · ${soonStores} en comercios`)}
     ${kpi('thermo', pct === 100 ? 'ok' : 'warn', 'Cadena de frío', `${pct} %`, `${okLots} de ${S.lots.length} lotes siempre entre 2 y 8 °C`)}
@@ -656,20 +687,37 @@ function viewTablero() {
     </div>
   </div>`;
 }
+// Impacto económico (solo Gerencia)
+function moneyRow() {
+  const atRisk = S.lots.filter(l => (l.excursion && !['bloqueado', 'retenido'].includes(l.status)) || daysLeft(l) < 3);
+  const pulled = S.lots.filter(l => ['bloqueado', 'retenido'].includes(l.status));
+  const saved = S.lots.filter(l => l.status === 'retenido');
+  const soon = S.lots.filter(l => daysLeft(l) <= 7 && !['bloqueado', 'retenido'].includes(l.status));
+  const sum = ls => ls.reduce((a, l) => a + lotValue(l), 0);
+  return `<div class="grid g4" style="margin-bottom:18px">
+    ${kpi('alert', atRisk.length ? 'bad' : 'ok', 'Mercadería en riesgo', money(sum(atRisk)), `${plural(atRisk.length, 'lote', 'lotes')} con desvío sin gestionar o que vencen en menos de 3 días`)}
+    ${kpi('lock', pulled.length ? 'bad' : 'ok', 'Retirada o retenida', money(sum(pulled)), pulled.length ? `${plural(pulled.length, 'lote', 'lotes')} fuera de la venta` : 'Ningún retiro en curso')}
+    ${kpi('shield', 'ok', 'Entregas evitadas', money(sum(saved)), saved.length ? `${plural(saved.length, 'lote', 'lotes')} frenados antes de llegar a un comercio` : 'Lotes frenados en ruta antes de entregarse')}
+    ${kpi('calendar', 'warn', 'Por vencer en 7 días', money(sum(soon)), 'Candidata a promoción o reubicación')}
+  </div>`;
+}
 function alertCard(a) {
   const managed = a.state === 'en_retiro';
-  const lvl = managed ? 'gestionada' : a.level;
+  const halted = a.state === 'frenada';
+  const lvl = managed ? 'gestionada' : halted ? 'alta' : a.level;
   const ic = a.level === 'critica' ? 'thermo' : a.level === 'info' ? 'truck' : 'calendar';
   const tag = managed ? `<span class="badge b-bloqueado">${icon('lock', 13, 2.4)}Lote bloqueado · en retiro</span>`
+    : halted ? `<span class="badge b-ok">${icon('check', 13, 2.6)}Entregas frenadas a tiempo</span>`
     : a.state === 'resuelta' ? `<span class="badge b-ok">Resuelta</span>`
     : a.level === 'critica' ? `<span class="badge b-bad">Crítica</span>` : a.level === 'alta' ? `<span class="badge b-warn">Alta</span>` : `<span class="badge b-muted">Media</span>`;
   const target = a.lot ? `#/lote/${a.lot}` : '#/logistica';
   return `<div class="alert ${lvl}" data-go="${target}">
     <span class="a-ic">${icon(ic, 18)}</span>
     <div style="flex:1"><div class="a-title">${a.lot ? `${a.lot} · ` : ''}${a.title}</div><div class="a-text">${a.text}</div>
-      <div class="a-meta">${tag}<span>${fmtDT(a.at)}</span>${a.level === 'critica' && !managed ? `<span style="margin-left:auto"><span class="btn-link">Ver lote ${icon('arrow', 16)}</span></span>` : ''}</div></div></div>`;
+      <div class="a-meta">${tag}<span>${fmtDT(a.at)}</span>${a.level === 'critica' && a.state === 'abierta' ? `<span style="margin-left:auto"><span class="btn-link">${a.lot ? 'Ver lote' : 'Ver camión'} ${icon('arrow', 16)}</span></span>` : ''}</div></div></div>`;
 }
 function bindTablero() {
+  const nb = document.getElementById('new-lot-btn'); if (nb) nb.onclick = openNewLotModal;
   const input = document.getElementById('search');
   input.oninput = () => { S.search = input.value; document.getElementById('lot-rows').innerHTML = lotRows(); bindRows(); };
   document.querySelectorAll('[data-filter]').forEach(b => b.onclick = () => { S.filter = b.dataset.filter; render(); });
@@ -688,10 +736,10 @@ function lotSteps(l) {
     { ic: 'snow', t: 'Cámara de frío', p: l.loc === 'planta' && !l.atPacking ? l.place : 'Cámara de frío 1', w: l.atPacking ? 'Pendiente' : fmtDT(l.camAt), st: l.atPacking ? 'pending' : l.loc === 'planta' ? 'current' : 'done' },
     { ic: 'truck', t: T ? T.name : 'Transporte', p: T ? T.route : 'Sin asignar', w: l.loadAt ? `Salida ${fmtDT(l.loadAt)}` : 'Pendiente', st: l.loc === 'transito' ? 'current' : l.loc === 'comercios' ? 'done' : 'pending' },
     { ic: 'store', t: 'Comercios', p: l.deliveries.length ? plural(l.deliveries.length, 'comercio', 'comercios') : 'Sin entregar',
-      w: l.deliveries.length ? `${relDay(l.deliveries[0].at)} ${hhmm(l.deliveries[0].at)}–${hhmm(l.deliveries[l.deliveries.length - 1].at)}` : l.loc === 'transito' ? 'Entrega prevista hoy' : 'Pendiente',
+      w: l.deliveries.length ? `${relDay(l.deliveries[0].at)} ${hhmm(l.deliveries[0].at)}–${hhmm(l.deliveries[l.deliveries.length - 1].at)}` : l.status === 'retenido' ? 'Entregas frenadas' : l.loc === 'transito' ? 'Entrega prevista hoy' : 'Pendiente',
       st: l.loc === 'comercios' ? (blocked ? 'incident' : 'current') : 'pending' },
   ];
-  if (l.excursion) { steps[3].st = 'incident'; steps[3].flag = `<span class="badge b-bad step-flag">${icon('thermo', 13, 2.4)}${t1(l.excursion.max)} °C · ${l.excursion.minutes} min</span>`; }
+  if (l.excursion) { const k = excInTruck(l) ? 3 : l.atPacking ? 1 : 2; steps[k].st = 'incident'; steps[k].flag = `<span class="badge b-bad step-flag">${icon('thermo', 13, 2.4)}${t1(l.excursion.max)} °C${l.excursion.minutes ? ` · ${l.excursion.minutes} min` : ''}</span>`; }
   if (blocked) steps[4].flag = `<span class="badge b-bloqueado step-flag">Retiro en curso</span>`;
   return `<div class="steps">${steps.map(s => `<div class="step ${s.st}"><div class="step-ic">${icon(s.ic, 22)}</div>
     <div class="step-t">${s.t}</div><div class="step-p">${s.p}</div><div class="step-w">${s.w}</div>${s.flag || ''}</div>`).join('')}</div>`;
@@ -753,7 +801,7 @@ function tempChart(l) {
     const e = l.excursion, px = x(+e.peakAt), py = y(e.max);
     const right = px > W - 260;
     g += `<circle class="cs-peak" cx="${px}" cy="${py}" r="7"/>`;
-    g += `<text class="cs-plabel" x="${right ? px - 14 : px + 14}" y="${py - 6}" text-anchor="${right ? 'end' : 'start'}">Pico ${t1(e.max)} °C · ${e.minutes} min fuera de rango</text>`;
+    g += `<text class="cs-plabel" x="${right ? px - 14 : px + 14}" y="${py - 6}" text-anchor="${right ? 'end' : 'start'}">${e.minutes ? `Pico ${t1(e.max)} °C · ${e.minutes} min fuera de rango` : `Control ${t1(e.max)} °C fuera de rango`}</text>`;
   }
   g += `<line class="cs-hover" x1="0" x2="0" y1="${Tp}" y2="${H - Bp}"/><circle class="cs-dot" r="6" cx="0" cy="0"/>`;
   g += `<rect class="cs-overlay" x="${Lp}" y="${Tp}" width="${W - Lp - Rp}" height="${H - Tp - Bp}"/>`;
@@ -788,8 +836,13 @@ function viewLote(id) {
   const just = S.justBlocked === l.id ? 'just-blocked' : '';
   let action = '';
   if (blocked) action = `<button class="btn btn-lg" disabled>${icon('lock', 18)}Lote bloqueado</button><span class="muted" style="font-size:.88rem">Desde ${fmtDT(l.blockedAt)} · ${S.notifications.find(n => n.lot === l.id)?.to.length || 0} destinatarios notificados</span>`;
+  else if (l.status === 'retenido') action = `<span class="muted" style="font-size:.9rem;max-width:280px;text-align:right">Entregas frenadas: el lote vuelve a planta para control de Calidad.</span>`;
+  else if (l.excursion && l.loc === 'transito') action = `<a class="btn btn-danger btn-lg" href="#/logistica">${icon('truck', 18)}Ir a frenar entregas</a>`;
   else if (l.excursion && canBlock) action = `<button class="btn btn-danger btn-lg" id="block-btn">${icon('lock', 18)}Bloquear y retirar lote</button>`;
   else if (l.excursion) action = `<span class="muted" style="font-size:.9rem">Solo Calidad o Gerencia pueden bloquear un lote.</span>`;
+  const excWhere = l.excursion ? (l.truck && l.loc !== 'planta' ? TRUCKS[l.truck].name : l.place) : '';
+  const excNote = l.deliveries.length ? `el lote ya se entregó en ${plural(l.deliveries.length, 'comercio', 'comercios')}`
+    : l.loc === 'transito' ? 'el lote todavía no se entregó a ningún comercio' : 'el lote todavía no salió de planta';
   return `
   <a class="back" href="#/tablero">${icon('back', 18)}Volver al tablero</a>
   <div class="card lot-head ${blocked ? 'is-blocked' : ''} ${just}">
@@ -798,8 +851,8 @@ function viewLote(id) {
       <div class="sub">${num(l.units)} unidades · vence ${fmtD(l.expires)}</div></div>
     <div class="lot-actions">${action}</div>
   </div>
-  ${l.excursion && !blocked ? `<div class="callout bad"><span class="c-ic">${icon('alert', 20)}</span><div><b>Alerta crítica: ${t1(l.excursion.max)} °C durante ${l.excursion.minutes} minutos en ${TRUCKS[l.truck].name}</b>
-    <div>${fmtD(l.excursion.from)}, de ${hhmm(l.excursion.from)} a ${hhmm(l.excursion.to)}. El rango permitido es de 2 a 8 °C y el lote ya se entregó en ${plural(l.deliveries.length, 'comercio', 'comercios')}.</div></div></div>` : ''}
+  ${l.excursion && !blocked ? `<div class="callout bad"><span class="c-ic">${icon('alert', 20)}</span><div><b>Alerta crítica: ${excText(l.excursion)} en ${excWhere}</b>
+    <div>${fmtD(l.excursion.from)}, de ${hhmm(l.excursion.from)} a ${hhmm(l.excursion.to)}. El rango permitido es de 2 a 8 °C y ${excNote}.</div></div></div>` : ''}
   ${blocked ? `<div class="callout bad ${just}"><span class="c-ic">${icon('lock', 20)}</span><div><b>Lote bloqueado y en retiro</b>
     <div>Se avisó a Calidad y a los ${plural(l.deliveries.length, 'comercio', 'comercios')} afectados. Nadie puede vender ni despachar este lote.</div></div></div>` : ''}
   <div class="card mt"><div class="card-h"><h2>Recorrido del lote</h2></div>${lotSteps(l)}</div>
@@ -811,6 +864,7 @@ function viewLote(id) {
       <dt>Producto</dt><dd>${l.product}</dd>
       <dt>Lote</dt><dd>${l.id}</dd>
       <dt>Unidades</dt><dd>${num(l.units)}</dd>
+      <dt>Valor</dt><dd>${money(lotValue(l))} <span class="muted" style="font-weight:500">· ${money(l.price)} por unidad</span></dd>
       <dt>Fabricación</dt><dd>${fmtD(l.made)} · ${hhmm(l.made)} · ${PLANT}</dd>
       <dt>Vencimiento</dt><dd style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">${fmtD(l.expires)} ${semaforo(d)}</dd>
       <dt>Conservación</dt><dd>Entre 2 y 8 °C</dd>
@@ -835,8 +889,8 @@ function emailParams(l) {
     to_email: DEMO_RECIPIENTS,
     lote: l.id,
     producto: l.product,
-    incidente: `${t1(l.excursion.max)} °C durante ${l.excursion.minutes} min en ${TRUCKS[l.truck].name}`,
-    comercios: l.deliveries.map(d => `• ${STORES[d.store].name} (${STORES[d.store].barrio}) – ${num(d.units)} unidades`).join('\n'),
+    incidente: `${excText(l.excursion)} en ${excPlace(l)}`,
+    comercios: l.deliveries.length ? l.deliveries.map(d => `• ${STORES[d.store].name} (${STORES[d.store].barrio}) – ${num(d.units)} unidades`).join('\n') : 'Ninguno: el lote todavía no salió de planta.',
     accion: 'Bloqueo y retiro inmediato',
     fecha_hora: fmtFull(new Date()),
   };
@@ -885,8 +939,8 @@ function openBlockModal(id) {
     <div class="modal-h"><span class="m-ic">${icon('lock', 22)}</span><div><h2 style="font-size:1.35rem">¿Bloquear y retirar el lote ${l.id}?</h2><div class="sub">${l.product} · ${num(l.units)} unidades</div></div></div>
     <div class="modal-b">Al confirmar:
       <ul><li>El lote queda <b>bloqueado</b> en todas las vistas: nadie lo puede vender ni despachar.</li>
-      <li>Se avisa por mail a <b>Calidad y a ${plural(l.deliveries.length, 'comercio', 'comercios')}</b> (${n} destinatarios).</li>
-      <li>Los comercios ven un <b>aviso de retiro inmediato</b> en su pantalla.</li></ul></div>
+      ${l.deliveries.length ? `<li>Se avisa por mail a <b>Calidad y a ${plural(l.deliveries.length, 'comercio', 'comercios')}</b> (${n} destinatarios).</li>
+      <li>Los comercios ven un <b>aviso de retiro inmediato</b> en su pantalla.</li>` : `<li>Se avisa por mail a <b>Calidad</b>. El lote todavía no salió de planta, así que no hay comercios afectados.</li>`}</ul></div>
     <div class="modal-f"><button class="btn" id="m-cancel">Cancelar</button><button class="btn btn-danger" id="m-ok">${icon('lock', 18)}Sí, bloquear y retirar</button></div>
   </div></div>`;
   const close = () => root.innerHTML = '';
@@ -915,11 +969,72 @@ function applyBlock(l, params) {
   S.justBlocked = l.id;
   setTimeout(() => { S.justBlocked = null; }, 1500);
 }
-function toast(msg) {
+function toast(msg, kind = 'ok') {
   const el = document.createElement('div');
-  el.className = 'toast'; el.innerHTML = `<span class="t-ic">${icon('check', 18, 3)}</span>${msg}`;
+  el.className = `toast ${kind}`; el.innerHTML = `<span class="t-ic">${icon(kind === 'bad' ? 'alert' : 'check', 18, 3)}</span>${msg}`;
   document.getElementById('toasts').appendChild(el);
   setTimeout(() => { el.style.transition = 'opacity .4s'; el.style.opacity = 0; setTimeout(() => el.remove(), 400); }, 4200);
+}
+
+/* ===================== Alta de lote ===================== */
+function openNewLotModal() {
+  const id = `L-${S.nextLotNum}`;
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `<div class="overlay" id="ov"><form class="modal" id="nl-form" role="dialog" aria-modal="true" novalidate>
+    <div class="modal-h"><span class="m-ic" style="background:var(--primary-soft);color:var(--primary)">${icon('box', 22)}</span><div><h2 style="font-size:1.35rem">Registrar lote ${id}</h2><div class="sub">Alta en ${PLANT}</div></div></div>
+    <div class="form">
+      <label class="field"><span>Producto</span><select id="nl-prod">${Object.entries(PRODUCTS).map(([k, p]) => `<option value="${k}">${p.name}</option>`).join('')}</select></label>
+      <div class="field-row">
+        <label class="field"><span>Unidades</span><input id="nl-units" type="number" min="1" step="1" value="1200"><span class="err" id="nl-units-err" hidden>Ingresá una cantidad mayor a 0.</span></label>
+        <label class="field"><span>Fabricado</span><select id="nl-made"><option value="0">Hoy</option><option value="1">Ayer</option></select></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>Ubicación</span><select id="nl-place"><option>Línea de empaque 2</option><option selected>Cámara de frío 1</option><option>Cámara de frío 2</option></select></label>
+        <label class="field"><span>Control de temperatura (°C)</span><input id="nl-temp" type="number" step="0.1" value="4.0"><span class="err" id="nl-temp-err" hidden>Ingresá la temperatura medida, por ejemplo 4,2.</span></label>
+      </div>
+      <div class="hint" id="nl-hint"></div>
+    </div>
+    <div class="modal-f"><button type="button" class="btn" id="m-cancel">Cancelar</button><button type="submit" class="btn btn-primary">${icon('check', 18)}Registrar lote</button></div>
+  </form></div>`;
+  const $ = s => document.getElementById(s);
+  const close = () => root.innerHTML = '';
+  const hint = () => {
+    const p = PRODUCTS[$('nl-prod').value];
+    const exp = at(p.shelf - +$('nl-made').value, 0, 0);
+    const temp = parseFloat($('nl-temp').value);
+    const out = !isNaN(temp) && (temp > 8 || temp < 2);
+    $('nl-hint').className = `hint ${out ? 'bad' : ''}`;
+    $('nl-hint').textContent = out
+      ? `${t1(temp)} °C está fuera del rango 2–8 °C: el lote se registra con una alerta para Calidad.`
+      : `Vence el ${fmtD(exp)} (${p.shelf} días de vida útil) · valor ${money(p.price * (parseInt($('nl-units').value, 10) || 0))}`;
+  };
+  ['nl-prod', 'nl-made', 'nl-units', 'nl-temp'].forEach(i => $(i).addEventListener('input', hint));
+  hint();
+  $('m-cancel').onclick = close;
+  $('ov').onclick = e => { if (e.target.id === 'ov') close(); };
+  $('nl-form').onsubmit = e => {
+    e.preventDefault();
+    const units = parseInt($('nl-units').value, 10);
+    const temp = parseFloat($('nl-temp').value);
+    $('nl-units-err').hidden = units > 0;
+    $('nl-temp-err').hidden = !isNaN(temp);
+    if (!(units > 0) || isNaN(temp)) return;
+    const key = $('nl-prod').value, place = $('nl-place').value;
+    const lot = buildLot({ id, p: key, dte: PRODUCTS[key].shelf - +$('nl-made').value, loc: 'planta', place, units, atPacking: place.startsWith('Línea') }, S.lots.length + 7);
+    // La lectura de control que cargó Calidad es la última del lote
+    if (lot.temps.length) lot.temps[lot.temps.length - 1] = { t: lot.temps[lot.temps.length - 1].t, v: temp };
+    else lot.temps.push({ t: new Date(), v: temp });
+    lot.excursion = findExcursion(lot.temps);
+    lot.isNew = true;
+    S.lots.push(lot); S.nextLotNum++;
+    if (lot.excursion) S.alerts.unshift({ id: `N${id}`, level: 'alta', lot: id, at: new Date(), state: 'abierta',
+      title: 'Control fuera de rango al registrar', text: `${lot.product} · ${t1(temp)} °C en ${place}` });
+    close();
+    location.hash = `#/lote/${id}`;
+    toast(`Lote ${id} registrado`);
+    mascotFlex();
+  };
+  $('nl-prod').focus();
 }
 function openLog() {
   const root = document.getElementById('drawer-root');
@@ -961,32 +1076,97 @@ function bindVencimientos() {
 }
 
 /* ===================== Logística ===================== */
+const truckLots = tid => S.lots.filter(l => l.truck === tid && l.loc === 'transito');
 function viewLogistica() {
   const hero = getLot('L-2411');
+  const liveLot = S.live ? truckLots(S.live.truck)[0] : null;
   const cards = Object.entries(TRUCKS).map(([tid, T]) => {
-    const onboard = S.lots.filter(l => l.truck === tid && l.loc === 'transito');
+    const onboard = truckLots(tid);
     const delivered = S.lots.filter(l => l.truck === tid && l.loc === 'comercios');
     const recall = S.lots.filter(l => l.truck === tid && l.status === 'bloqueado');
-    const exc = S.lots.filter(l => l.truck === tid && l.excursion);
-    const live = onboard[0] ? onboard[0].temps[onboard[0].temps.length - 1] : null;
-    const temp = live ? live.v : 4.0;
+    const exc = delivered.filter(l => l.excursion);
+    const last = onboard[0] ? onboard[0].temps[onboard[0].temps.length - 1] : null;
+    const temp = last ? last.v : 4.0;
+    const hot = temp > 8 || temp < 2;
     const enRuta = onboard.length > 0;
-    return `<div class="card truck ${exc.length && !recall.length ? '' : ''}">
+    const halted = S.truckHalted[tid];
+    const units = onboard.reduce((a, l) => a + l.units, 0);
+    return `<div class="card truck">
       <div class="truck-h"><div><h2 style="font-size:1.3rem;display:flex;align-items:center;gap:8px">${icon('truck', 22)}${T.name}</h2><div class="sub">${T.route} · ${T.plate}</div></div>
-        ${enRuta ? `<span class="badge b-transito">En ruta</span>` : `<span class="badge b-muted">En base</span>`}</div>
-      <div class="truck-temp" style="color:var(--ok)">${t1(temp)} °C<small>${enRuta ? 'ahora' : 'en base'}</small></div>
-      <div style="margin-bottom:8px"><span class="badge b-ok">${icon('check', 13, 2.6)}Dentro de 2–8 °C</span></div>
+        ${halted ? `<span class="badge b-warn">Vuelve a planta</span>` : enRuta ? `<span class="badge b-transito">En ruta</span>` : `<span class="badge b-muted">En base</span>`}</div>
+      <div class="truck-temp" style="color:var(${hot ? '--bad' : '--ok'})">${t1(temp)} °C<small>${enRuta ? 'ahora' : 'en base'}</small></div>
+      <div style="margin-bottom:8px">${hot ? `<span class="badge b-bad">${icon('thermo', 13, 2.4)}Fuera de 2–8 °C</span>` : `<span class="badge b-ok">${icon('check', 13, 2.6)}Dentro de 2–8 °C</span>`}</div>
       <div class="row"><span>Chofer</span><span>${T.driver}</span></div>
-      <div class="row"><span>Entregas</span><span>${T.stops}</span></div>
+      <div class="row"><span>Entregas</span><span>${halted ? 'Frenadas' : T.stops}</span></div>
+      ${enRuta && T.next && !halted ? `<div class="row"><span>Próxima entrega</span><span>${T.next}</span></div>` : ''}
       <div class="row"><span>${enRuta ? 'Lotes a bordo' : 'Última ruta'}</span><span>${(enRuta ? onboard : delivered).map(l => `<a href="#/lote/${l.id}">${l.id}</a>`).join(', ')}</span></div>
+      ${S.live && S.live.truck === tid && S.live.alerted && !halted ? `<div class="task bad"><b>La temperatura está subiendo</b><br>${plural(onboard.length, 'lote', 'lotes')} a bordo (${num(units)} unidades). Todavía no se entregó en ${T.next}.
+        <div style="margin-top:10px"><button class="btn btn-danger" id="halt-btn" data-truck="${tid}">${icon('lock', 16)}Frenar entregas y volver a planta</button></div></div>` : ''}
+      ${halted ? `<div class="task ok"><b>Entregas frenadas ${fmtDT(halted)}</b><br>${num(units)} unidades vuelven a planta para control de Calidad. Ningún comercio recibió producto fuera de rango.</div>` : ''}
       ${exc.map(l => recall.includes(l)
         ? `<div class="task bad"><b>Retiro en curso: ${l.id}</b><br>Pasar a recolectar por ${plural(l.deliveries.length, 'comercio', 'comercios')}: ${l.deliveries.map(d => STORES[d.store].name).join(', ')}.</div>`
         : `<div class="task bad"><b>Desvío de temperatura ${fmtD(l.excursion.from)}</b><br>${t1(l.excursion.max)} °C durante ${l.excursion.minutes} min, de ${hhmm(l.excursion.from)} a ${hhmm(l.excursion.to)} · <a href="#/lote/${l.id}" style="color:inherit;font-weight:700;text-decoration:underline">${l.id}</a></div>`).join('')}
     </div>`;
   }).join('');
-  return `<div class="page-head"><div><h1>Logística</h1><div class="sub">Camiones, rutas y temperatura en tránsito</div></div></div>
+  return `<div class="page-head"><div><h1>Logística</h1><div class="sub">Camiones, rutas y temperatura en tránsito</div></div>
+      ${S.live ? '' : `<button class="btn" id="sim-btn" title="Solo para la demo: simula una falla del equipo de frío">${icon('thermo', 16)}Simular falla de frío en ${TRUCKS.T2.name}</button>`}</div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">${cards}</div>
+    ${liveLot ? `<div class="card mt"><div class="card-h"><h2>Temperatura en vivo · ${TRUCKS[S.live.truck].name}</h2>
+      ${S.truckHalted[S.live.truck] ? `<span class="badge b-warn">Entregas frenadas</span>` : `<span class="badge b-bad"><span class="dot bad live-dot"></span>En vivo</span>`}</div>
+      <div class="card-b">${tempChart(liveLot)}</div></div>` : ''}
     <div class="card mt"><div class="card-h"><h2>Temperatura del ${TRUCKS.T3.name} en su última ruta</h2><span class="muted" style="font-size:.88rem">Lote ${hero.id}</span></div><div class="card-b">${tempChart(hero)}</div></div>`;
+}
+function bindLogistica() {
+  bindCharts();
+  const sim = document.getElementById('sim-btn'); if (sim) sim.onclick = () => startColdFailure('T2');
+  const halt = document.getElementById('halt-btn'); if (halt) halt.onclick = () => haltTruck(halt.dataset.truck);
+}
+
+/* ===================== Falla de frío en ruta (simulación de demo) ===================== */
+// La temperatura del camión sube en vivo; al pasar 8 °C salta la alerta y Logística puede frenar las entregas
+const SIM_STEPS = [5.1, 5.9, 6.8, 7.6, 8.3, 8.9, 9.2, 9.4];
+function startColdFailure(tid) {
+  if (S.live) return;
+  const run = { truck: tid, step: 0, alerted: false };
+  S.live = run;
+  render();
+  run.timer = setInterval(() => {
+    if (S.live !== run || S.truckHalted[tid]) return clearInterval(run.timer);
+    const v = SIM_STEPS[run.step++];
+    truckLots(tid).forEach(l => {
+      const last = l.temps[l.temps.length - 1];
+      l.temps.push({ t: new Date(+last.t + 10 * MIN), v });
+      l.excursion = findExcursion(l.temps);
+    });
+    let raised = false;
+    if (v > 8 && !run.alerted) {
+      run.alerted = raised = true;
+      const T = TRUCKS[tid], n = truckLots(tid).length;
+      S.alerts.unshift({ id: 'A7', level: 'critica', truck: tid, at: new Date(), state: 'abierta',
+        title: `${T.name} · Temperatura subiendo en ruta`,
+        text: `${t1(v)} °C y en aumento · ${plural(n, 'lote', 'lotes')} a bordo. Todavía no entregó: se puede frenar antes de ${T.next}.` });
+      toast(`Alerta: ${T.name} a ${t1(v)} °C en ruta`, 'bad');
+      mascotFlex();
+    }
+    if (run.step >= SIM_STEPS.length) clearInterval(run.timer);
+    const r = route();
+    if (raised || r.name === 'logistica' || (r.name === 'lote' && truckLots(tid).some(l => l.id === r.arg))) render();
+  }, 900);
+}
+function haltTruck(tid) {
+  if (S.truckHalted[tid]) return;
+  S.truckHalted[tid] = new Date();
+  if (S.live && S.live.timer) clearInterval(S.live.timer);
+  const lots = truckLots(tid);
+  lots.forEach(l => { l.status = 'retenido'; });
+  const a = S.alerts.find(x => x.id === 'A7');
+  if (a) {
+    a.state = 'frenada';
+    a.text = `Entregas frenadas a ${t1(Math.max(...lots.map(l => l.excursion ? l.excursion.max : 0)))} °C. ${plural(lots.length, 'lote vuelve', 'lotes vuelven')} a planta; ningún comercio recibió producto fuera de rango.`;
+  }
+  render();
+  toast('Entregas frenadas: ningún comercio recibió producto fuera de rango');
+  mascotFlex();
 }
 
 /* ===================== Vista Comercio ===================== */
@@ -1028,7 +1208,7 @@ function render() {
   document.getElementById('chart-tip').style.opacity = 0;
   if (r.name === 'lote') { app.innerHTML = viewLote(r.arg); bindLote(r.arg); }
   else if (r.name === 'vencimientos') { app.innerHTML = viewVencimientos(); bindVencimientos(); }
-  else if (r.name === 'logistica') { app.innerHTML = viewLogistica(); bindCharts(); }
+  else if (r.name === 'logistica') { app.innerHTML = viewLogistica(); bindLogistica(); }
   else if (r.name === 'comercio') { app.innerHTML = viewComercio(); bindComercio(); }
   else { app.innerHTML = viewTablero(); bindTablero(); }
 }
@@ -1039,6 +1219,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') { const ov =
 const resetBtn = document.getElementById('reset-btn');
 resetBtn.innerHTML = `${icon('refresh', 14)}Reiniciar demo`;
 resetBtn.onclick = () => {
+  if (S.live && S.live.timer) clearInterval(S.live.timer);
   S = initialState();
   document.getElementById('modal-root').innerHTML = ''; document.getElementById('drawer-root').innerHTML = '';
   if (location.hash !== '#/tablero') location.hash = '#/tablero'; else render();
