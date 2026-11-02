@@ -64,6 +64,10 @@ Variables que envía la demo: `to_email`, `lote`, `producto`, `incidente`, `come
 
 ### Publicarla en Vercel (URL pública, con mail real)
 
+**Ya está publicada en https://lote360.vercel.app** (proyecto `lote360` del equipo `urudata` en Vercel, subida desde la computadora con `npx vercel deploy --prod`). Para que mande el mail real, cargá las cuatro variables del paso 3 en **Settings → Environment Variables** del proyecto y volvé a publicar.
+
+Los pasos de abajo sirven si más adelante se conecta el repositorio de GitHub para que se publique solo:
+
 1. En **vercel.com**: **Add New → Project** e importá el repositorio `Urudata-Software/isf-prototypes-hackathon-2026-11`.
 2. Dejá **Root Directory** en la raíz (`./`) y **Framework Preset** en *Other*. El resto lo toma del `vercel.json` del repo.
 3. Abrí **Environment Variables** y cargá los mismos valores que en `config.js`:
