@@ -16,15 +16,19 @@ Archivo de la demo: `lote360.html`. Se abre con doble clic. No necesita servidor
    - **Subject** y **Content:** copiá los textos de abajo.
    - Guardá y copiá el **Template ID** (ejemplo: `template_xyz789`).
 4. **Account → General → Public Key**: copiala.
-5. Abrí `lote360.html` con el Bloc de notas y editá las primeras líneas del script (buscá `EMAILJS_CONFIG`):
+5. En la carpeta de la demo abrí `config.js` con el Bloc de notas (si no existe, copiá `config.example.js` y renombralo a `config.js`) y completá:
 
    ```js
-   const EMAILJS_CONFIG = { publicKey: "tu_public_key", serviceId: "service_abc123", templateId: "template_xyz789" };
-   const DEMO_RECIPIENTS = "vos@empresa.com, jurado@ejemplo.com";
+   window.LOTE360_CONFIG = {
+     emailjs: { publicKey: "tu_public_key", serviceId: "service_abc123", templateId: "template_xyz789" },
+     recipients: "vos@empresa.com, jurado@ejemplo.com",
+   };
    ```
 
-   `DEMO_RECIPIENTS` admite varios mails separados por coma.
-6. Guardá, abrí el archivo, bloqueá el L-2411 y fijate que llegue el mail (revisá el spam).
+   `recipients` admite varios mails separados por coma. `config.js` **no se sube a GitHub ni se publica**: las claves quedan solo en tu computadora.
+6. Guardá, abrí `lote360.html` con doble clic, bloqueá el L-2411 y fijate que llegue el mail (revisá el spam).
+
+> **Importante:** el mail real sale solo desde el archivo abierto en tu computadora. La versión publicada en la URL no puede conectarse a EmailJS (el sitio bloquea esas conexiones). Allá la demo funciona entera, con el aviso y el Registro de notificaciones, pero sin mail real. Para el pitch con mail en vivo, usá el archivo local.
 
 Si algo falla o tarda más de 5 segundos, la demo sigue igual: aparece el aviso de éxito y el error solo queda en la consola del navegador (F12).
 

@@ -61,3 +61,7 @@ __pycache__/
 
 # agent browser-debug output
 .playwright-cli/
+
+# Claves locales de la demo Lote360
+config.js
+.vs/

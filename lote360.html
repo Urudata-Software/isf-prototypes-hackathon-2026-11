@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lote360 · Trazabilidad en frío</title>
+<title>Lote360</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@ button{font:inherit;cursor:pointer}
 .ic{flex:none;vertical-align:middle}
 
 /* Topbar */
-.topbar{position:sticky;top:0;z-index:20;background:#0f2c4f;color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#0f2c4f;color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.12)}
 .topbar-in{max-width:1360px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;gap:28px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;letter-spacing:-.01em;color:#fff}
 .brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3f8fd8,#1b5ea6);display:grid;place-items:center}
@@ -248,7 +248,7 @@ svg.chart{width:100%;height:auto;display:block}
 #toasts{position:fixed;top:84px;right:24px;z-index:70;display:flex;flex-direction:column;gap:10px}
 .toast{display:flex;align-items:center;gap:12px;background:#0f2c4f;color:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 10px 30px rgba(0,0,0,.25);font-weight:600;animation:slideL .3s ease;font-size:1rem}
 .toast .t-ic{width:30px;height:30px;border-radius:50%;background:var(--ok-dot);display:grid;place-items:center}
-.reset{position:fixed;left:16px;bottom:14px;z-index:30;background:transparent;border:0;color:#9aa8bb;font-size:.78rem;display:flex;align-items:center;gap:5px;padding:6px 8px;border-radius:8px}
+.reset{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:30;background:transparent;border:0;color:#9aa8bb;font-size:.78rem;display:flex;align-items:center;gap:5px;padding:6px 8px;border-radius:8px}
 .reset:hover{color:var(--ink2);background:#fff}
 
 @media (max-width:1100px){.g4{grid-template-columns:1fr 1fr}.g-dash,.g2{grid-template-columns:1fr}.today{display:none}}
@@ -264,13 +264,17 @@ svg.chart{width:100%;height:auto;display:block}
 <div id="toasts"></div>
 <div id="chart-tip"></div>
 
+<!-- Claves de EmailJS: viven en config.js, que no se sube a GitHub ni se publica (ver config.example.js) -->
+<script src="config.js"></script>
 <script>
 /* =====================================================================
-   CONFIGURACIÓN DE LA DEMO — editá estos valores antes de presentar
+   CONFIGURACIÓN DE LA DEMO — se lee de config.js; si no está, la demo
+   funciona igual pero sin mandar el mail real
    ===================================================================== */
-const EMAILJS_CONFIG = { publicKey: "TU_PUBLIC_KEY", serviceId: "TU_SERVICE_ID", templateId: "TU_TEMPLATE_ID" };
+const LOCAL_CONFIG = window.LOTE360_CONFIG || {};
+const EMAILJS_CONFIG = Object.assign({ publicKey: "TU_PUBLIC_KEY", serviceId: "TU_SERVICE_ID", templateId: "TU_TEMPLATE_ID" }, LOCAL_CONFIG.emailjs);
 // Mails reales que reciben la notificación (separados por coma)
-const DEMO_RECIPIENTS = "[mail1@...], [mail2@...]";
+const DEMO_RECIPIENTS = LOCAL_CONFIG.recipients || "[mail1@...], [mail2@...]";
 // Tiempo máximo de espera del envío antes de seguir con la demo
 const EMAIL_TIMEOUT_MS = 5000;
 
