@@ -91,7 +91,7 @@ Antes de empezar: perfil **Calidad / Producción**, pantalla **Tablero**, demo r
 | # | Clic | Qué decís |
 |---|---|---|
 | 1 | *(Tablero, sin tocar nada)* | "Esto es Loti. Una sola pantalla donde fábrica, logística, gerencia y comercios ven lo mismo: dónde está cada lote, a qué temperatura estuvo y cuándo vence." |
-| 2 | Señalá las 4 tarjetas | "Quince lotes activos, cuatro alertas abiertas, siete que vencen esta semana. Y un 93 % de cumplimiento de la cadena de frío. Ese 7 % que falta es nuestra historia de hoy." |
+| 2 | Señalá las 4 tarjetas | "Veintitrés lotes activos, de lácteos a fiambres, pastas frescas y jugos. Cinco alertas abiertas, diez que vencen esta semana. Y un 96 % de cumplimiento de la cadena de frío. Ese 4 % que falta es nuestra historia de hoy." |
 | 3 | Clic en la alerta roja **L-2411** | "Hoy esta alerta llega por WhatsApp, tarde y de tercera mano. Acá, Calidad la ve al instante." |
 | 4 | Señalá el **Recorrido del lote** | "Este es el yogur bebible de frutilla, lote 2411. Se fabricó en Planta Canelones, se empacó, pasó por la cámara, salió en el Camión 3 por la ruta Montevideo Este y hoy está en seis comercios." |
 | 5 | Bajá al **gráfico** y pasá el mouse por el pico | "Y esto es lo que nadie veía: entre la tercera y la cuarta entrega, el camión llegó a 9,2 grados durante 40 minutos. Fuera del rango de 2 a 8." |
@@ -122,7 +122,7 @@ Si sobra tiempo: **Vencimientos** (semáforo) o **Logística** (el Camión 3 ya 
 - [ ] Zoom del navegador al 100 % y pantalla duplicada en el proyector.
 - [ ] Una **segunda pestaña** con la demo abierta y lista, de respaldo.
 - [ ] El celular con la casilla de mail abierta, sin sonido y con las notificaciones visibles.
-- [ ] Hiciste clic en **Reiniciar demo** (abajo a la izquierda). El tablero muestra 4 alertas abiertas y 1 crítica.
+- [ ] Hiciste clic en **Reiniciar demo** (abajo a la izquierda). El tablero muestra 23 lotes, 5 alertas abiertas y 1 crítica.
 
 **Si algo sale mal en vivo**
 - [ ] No llegó el mail: seguí igual y mostrá el **Registro de notificaciones** (el sobre).

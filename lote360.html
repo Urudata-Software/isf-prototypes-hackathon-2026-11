@@ -410,6 +410,13 @@ const PRODUCTS = {
   QCR: { name: 'Queso crema 300 g', shelf: 30 },
   CRL: { name: 'Crema de leche 250 ml', shelf: 15 },
   PCH: { name: 'Postre de chocolate 120 g ×4', shelf: 20 },
+  JAM: { name: 'Jamón cocido feteado 200 g', shelf: 25 },
+  RAV: { name: 'Ravioles de ricotta 500 g', shelf: 25 },
+  ENS: { name: 'Ensalada lista mix 250 g', shelf: 7 },
+  JUG: { name: 'Jugo de naranja exprimido 1 L', shelf: 12 },
+  SAL: { name: 'Salchichas tipo viena ×8', shelf: 40 },
+  TAR: { name: 'Masa para tartas ×2', shelf: 35 },
+  HUM: { name: 'Hummus clásico 250 g', shelf: 30 },
 };
 const STORES = {
   c1: { name: 'Supermercado El Trébol', barrio: 'Buceo', depto: 'Montevideo', email: 'pedidos@eltrebol.demo' },
@@ -448,6 +455,15 @@ const LOT_SPECS = [
   { id: 'L-2402', p: 'PCH', dte: 9, loc: 'comercios', truck: 'T1', stores: [['c3', 60], ['c7', 90]] },
   { id: 'L-2404', p: 'YBV', dte: 11, loc: 'comercios', truck: 'T3', stores: [['c1', 200], ['c2', 160], ['c5', 180]] },
   { id: 'L-2408', p: 'QCR', dte: 24, loc: 'comercios', truck: 'T1', stores: [['c4', 80], ['c7', 100]] },
+  // Otros refrigerados: fiambres, pastas frescas, vegetales, jugos y untables
+  { id: 'L-2416', p: 'JAM', dte: 9, loc: 'comercios', truck: 'T2', stores: [['c2', 180], ['c4', 140], ['c6', 120]] },
+  { id: 'L-2417', p: 'RAV', dte: 18, loc: 'planta', place: 'Cámara de frío 2', units: 1400 },
+  { id: 'L-2418', p: 'ENS', dte: 2, loc: 'comercios', truck: 'T3', stores: [['c1', 90], ['c5', 80]] },
+  { id: 'L-2419', p: 'JUG', dte: 10, loc: 'transito', truck: 'T2', units: 640 },
+  { id: 'L-2420', p: 'SAL', dte: 27, loc: 'comercios', truck: 'T1', stores: [['c7', 150], ['c8', 120]] },
+  { id: 'L-2421', p: 'TAR', dte: 5, loc: 'planta', place: 'Cámara de frío 1', units: 900 },
+  { id: 'L-2422', p: 'HUM', dte: 4, loc: 'comercios', truck: 'T3', stores: [['c2', 60], ['c3', 50]] },
+  { id: 'L-2423', p: 'JAM', dte: 24, loc: 'transito', truck: 'T1', units: 800 },
 ];
 
 function noise(i, seed) { const x = Math.sin(i * 12.9898 + seed * 78.233) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
@@ -521,6 +537,8 @@ function initialState() {
       title: 'Vence en 2 días en planta', text: 'Queso crema 300 g · 420 unidades en Cámara de frío 2' },
     { id: 'A4', level: 'media', lot: 'L-2409', at: at(0, 6, 0), state: 'abierta',
       title: 'Vence en 2 días en 2 comercios', text: 'Queso crema 300 g · Super Costa Azul y Almacén El Ceibo' },
+    { id: 'A6', level: 'media', lot: 'L-2418', at: at(0, 6, 0), state: 'abierta',
+      title: 'Vence en 2 días en 2 comercios', text: 'Ensalada lista mix 250 g · Supermercado El Trébol y Minimercado Los Olivos' },
     { id: 'A5', level: 'info', truck: 'T1', at: at(-1, 16, 20), state: 'resuelta',
       title: 'Camión 1: puerta abierta 4 min', text: 'Las Piedras · la temperatura volvió al rango en 6 min (máx. 7,1 °C)' },
   ];
