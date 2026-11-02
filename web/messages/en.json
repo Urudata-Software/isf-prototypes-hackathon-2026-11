@@ -1,0 +1,65 @@
+{
+  "auth": {
+    "signIn": "Sign in",
+    "continueWithSSO": "Continue with SSO",
+    "signOut": "Sign out",
+    "notConfigured": "Single sign-on is not configured",
+    "notConfiguredHint": "This prototype runs as a demo user. A developer turns on real sign-on by filling in the Entra ID settings — no code changes needed.",
+    "backToDashboard": "Go to the dashboard"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "signedInAs": "Signed in as",
+    "demoMode": "Demo mode — no real sign-on is configured.",
+    "documentsLink": "Documents"
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again.",
+    "tryAgain": "Try again",
+    "unexpectedError": "Something went wrong. Please try again."
+  },
+  "documents": {
+    "title": "Documents",
+    "newDocument": "New document",
+    "back": "← Back",
+    "backToList": "Back to documents",
+    "documentCount": "{count, plural, one {# document} other {# documents}}",
+    "noResults": "No documents found.",
+    "notFound": "Document not found",
+    "status": {
+      "draft": "Draft",
+      "review": "In review",
+      "published": "Published"
+    },
+    "table": {
+      "title": "Title",
+      "status": "Status",
+      "summary": "Summary",
+      "created": "Created",
+      "actions": "Actions",
+      "edit": "Edit",
+      "delete": "Delete",
+      "noSummary": "—"
+    },
+    "form": {
+      "newTitle": "New document",
+      "editTitle": "Edit document",
+      "title": "Title",
+      "content": "Content",
+      "status": "Status",
+      "selectStatus": "Select a status",
+      "saving": "Saving…",
+      "createSubmit": "Create document",
+      "editSubmit": "Save changes",
+      "failedToCreate": "Could not create the document.",
+      "failedToUpdate": "Could not save the document."
+    },
+    "detail": {
+      "summaryHeading": "Summary",
+      "noSummary": "No summary yet.",
+      "summarize": "Summarize",
+      "summarizing": "Summarizing…"
+    }
+  }
+}

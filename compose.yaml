@@ -1,0 +1,82 @@
+# One command to run the whole prototype:
+#
+#   docker compose up
+#
+# The API applies migrations and seeds itself on start, so there is nothing to
+# configure. Open http://localhost:3000 when the web service says it is ready.
+#
+# Running natively instead is still fully supported — see STACK.md.
+
+services:
+  api:
+    build:
+      context: ./api
+      target: dev
+    ports:
+      # Unlike `next dev`, Docker will not pick another port when one is taken —
+      # it fails outright. Override with API_PORT=8001 docker compose up.
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      # Source is mounted for hot reload. The virtualenv lives at /opt/venv in
+      # the image, outside this mount, so it survives.
+      - ./api:/app
+    environment:
+      DATABASE_URL: sqlite:///./prototype.db
+      # Bind-mounted Windows drives do not deliver inotify events into the
+      # container, so the reloader has to poll. Drop this if the repository
+      # lives inside WSL or on Linux/macOS.
+      WATCHFILES_FORCE_POLLING: "true"
+      # Empty on purpose: absent credentials are what select the fakes.
+      # Fill these in here, or in api/.env, to bind the real implementations.
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      OPENAI_MODEL: "${OPENAI_MODEL:-gpt-4o-mini}"
+      # Set both to make the API verify Entra tokens. See STACK.md.
+      ENTRA_TENANT_ID: "${ENTRA_TENANT_ID:-}"
+      ENTRA_API_AUDIENCE: "${ENTRA_API_AUDIENCE:-}"
+    healthcheck:
+      # The web service renders server-side on first request, so it must not
+      # start before the API can answer.
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+
+  web:
+    build:
+      context: ./web
+      target: dev
+    # Turbopack — the Next 16 default — cannot see file changes across a Windows
+    # bind mount, so edits are silently never picked up. webpack with polling
+    # reloads in a few seconds and works everywhere, at some compile speed.
+    # On Linux, macOS, or a repository inside WSL, drop --webpack and
+    # WATCHPACK_POLLING below to get Turbopack back.
+    command: pnpm dev --webpack --hostname 0.0.0.0
+    ports:
+      # If something already uses 3000 on this machine, the stack will not
+      # start: WEB_PORT=3100 docker compose up
+      - "${WEB_PORT:-3000}:3000"
+    volumes:
+      - ./web:/app
+      # Anonymous volumes: keep the image's node_modules and the build cache
+      # from being hidden by the bind mount above.
+      - /app/node_modules
+      - /app/.next
+    environment:
+      # Service name, not localhost: the BFF calls the API from inside the
+      # compose network. The browser never talks to it directly.
+      BACKEND_API_URL: http://api:8000
+      WATCHPACK_POLLING: "true"
+      # Empty means the app runs as a demo user with no sign-in. Set all four to
+      # turn Microsoft Entra ID on — see STACK.md -> Turning on Entra ID.
+      AUTH_SECRET: "${AUTH_SECRET:-}"
+      ENTRA_TENANT_ID: "${ENTRA_TENANT_ID:-}"
+      ENTRA_CLIENT_ID: "${ENTRA_CLIENT_ID:-}"
+      ENTRA_CLIENT_SECRET: "${ENTRA_CLIENT_SECRET:-}"
+      ENTRA_API_SCOPE: "${ENTRA_API_SCOPE:-}"
+      # Auth.js builds the sign-in callback URL from this. It must be the URL the
+      # browser uses, which is the published port — not the in-network one.
+      AUTH_URL: "${AUTH_URL:-http://localhost:${WEB_PORT:-3000}}"
+    depends_on:
+      api:
+        condition: service_healthy

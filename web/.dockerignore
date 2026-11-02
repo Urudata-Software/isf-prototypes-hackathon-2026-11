@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+coverage
+next-env.d.ts
+types
+
+# Never bake a developer's real credentials into an image.
+.env
+.env.*
+!.env.example
+
+.git
+.gitignore
+Dockerfile
+.dockerignore

@@ -1,0 +1,19 @@
+.venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.ruff_cache
+.mypy_cache
+
+# Never bake a developer's real credentials or local database into an image.
+.env
+.env.*
+!.env.example
+*.db
+*.db-journal
+*.db-wal
+
+.git
+.gitignore
+Dockerfile
+.dockerignore

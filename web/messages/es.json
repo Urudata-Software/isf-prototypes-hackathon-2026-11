@@ -1,0 +1,65 @@
+{
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "continueWithSSO": "Continuar con SSO",
+    "signOut": "Cerrar sesión",
+    "notConfigured": "El inicio de sesión único no está configurado",
+    "notConfiguredHint": "Este prototipo funciona con un usuario de demostración. Un desarrollador activa el inicio de sesión real completando la configuración de Entra ID, sin cambiar código.",
+    "backToDashboard": "Ir al inicio"
+  },
+  "dashboard": {
+    "title": "Inicio",
+    "signedInAs": "Conectado como",
+    "demoMode": "Modo demostración — no hay inicio de sesión real configurado.",
+    "documentsLink": "Documentos"
+  },
+  "errors": {
+    "title": "Algo salió mal",
+    "description": "Ocurrió un error inesperado. Por favor, intenta de nuevo.",
+    "tryAgain": "Intentar de nuevo",
+    "unexpectedError": "Algo salió mal. Por favor, intenta de nuevo."
+  },
+  "documents": {
+    "title": "Documentos",
+    "newDocument": "Nuevo documento",
+    "back": "← Volver",
+    "backToList": "Volver a documentos",
+    "documentCount": "{count, plural, one {# documento} other {# documentos}}",
+    "noResults": "No se encontraron documentos.",
+    "notFound": "Documento no encontrado",
+    "status": {
+      "draft": "Borrador",
+      "review": "En revisión",
+      "published": "Publicado"
+    },
+    "table": {
+      "title": "Título",
+      "status": "Estado",
+      "summary": "Resumen",
+      "created": "Creado",
+      "actions": "Acciones",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "noSummary": "—"
+    },
+    "form": {
+      "newTitle": "Nuevo documento",
+      "editTitle": "Editar documento",
+      "title": "Título",
+      "content": "Contenido",
+      "status": "Estado",
+      "selectStatus": "Seleccionar un estado",
+      "saving": "Guardando…",
+      "createSubmit": "Crear documento",
+      "editSubmit": "Guardar cambios",
+      "failedToCreate": "No se pudo crear el documento.",
+      "failedToUpdate": "No se pudo guardar el documento."
+    },
+    "detail": {
+      "summaryHeading": "Resumen",
+      "noSummary": "Todavía no hay resumen.",
+      "summarize": "Resumir",
+      "summarizing": "Resumiendo…"
+    }
+  }
+}

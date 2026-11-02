@@ -1,0 +1,10 @@
+# Shell scripts and Dockerfiles must keep LF endings even when checked out on
+# Windows. With core.autocrlf on — the default for Git for Windows — a CRLF
+# entrypoint fails inside a Linux container with an unhelpful
+# "/bin/sh: bad interpreter: No such file or directory".
+* text=auto
+
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.Dockerfile text eol=lf
+compose.yaml text eol=lf

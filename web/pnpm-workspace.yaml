@@ -1,0 +1,12 @@
+# Not a monorepo — pnpm 11 reads its settings from this file rather than from the
+# "pnpm" field in package.json, which it no longer honours.
+#
+# Native postinstall builds are blocked by default in pnpm 10+. Next needs
+# @swc/core to compile and sharp to optimise images, so these are approved up
+# front: without this, `pnpm install` ends at an interactive approve-builds
+# prompt, which is exactly the kind of wall a non-technical user cannot get past.
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  sharp: true
+  unrs-resolver: true

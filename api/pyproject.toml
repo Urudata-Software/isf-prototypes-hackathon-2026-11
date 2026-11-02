@@ -1,0 +1,46 @@
+[project]
+name = "api"
+version = "0.1.0"
+description = "FastAPI backend for an ISF web-app prototype"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.120",
+    "uvicorn[standard]>=0.38",
+    "sqlalchemy>=2.0.44",
+    "alembic>=1.17",
+    "pydantic>=2.12",
+    "pydantic-settings>=2.13",
+    "python-dotenv>=1.1",
+    "openai>=2.53.0",
+    "pyjwt[crypto]>=2.13.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15",
+    "pytest>=9.0",
+    # starlette's TestClient wants httpx2; plain httpx still works but warns.
+    "httpx2>=2.0",
+]
+
+[tool.uv]
+# There is no build-system here — app/ is imported from the project root rather
+# than installed. Saying so explicitly stops uv trying to build a wheel for it,
+# which is what happens in a Docker layer that has the lockfile but no source.
+package = false
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "N"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# app/ is imported from the project root rather than installed, so the root has to
+# be on sys.path. Without this, every test module fails to import.
+pythonpath = ["."]
