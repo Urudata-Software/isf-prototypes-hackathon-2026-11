@@ -221,6 +221,18 @@ svg.chart{width:100%;height:auto;display:block}
 .task{margin-top:14px;border-radius:10px;padding:12px 14px;font-size:.92rem}
 .task.bad{background:var(--bad-bg);color:#7d1117;border:1px solid var(--bad-line)}
 .task.ok{background:var(--ok-bg);color:#0f5133;border:1px solid var(--ok-line)}
+.g-trend{grid-template-columns:2.4fr 1fr}
+.tr-bar{fill:#b8c5d6}
+.tr-bar.after{fill:var(--primary)}
+.tr-bar.current{opacity:.45}
+.tr-val{font-size:12.5px;font-weight:700;fill:var(--ink2);font-variant-numeric:tabular-nums}
+.banner.ok{background:var(--ok);box-shadow:0 8px 24px rgba(23,120,76,.22)}
+.btn-banner{margin-top:14px;background:#fff;color:var(--bad);border:0}
+.btn-banner:hover{background:#fdeced}
+.progress{margin-top:12px}
+.progress-t{display:flex;justify-content:space-between;gap:12px;font-size:.9rem;margin-bottom:6px;flex-wrap:wrap}
+.bar{height:10px;border-radius:999px;background:rgba(196,35,43,.15);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok-dot);border-radius:999px;transition:width .6s ease}
 .live-dot{width:8px;height:8px;background:var(--bad);animation:livePulse 1s ease-in-out infinite}
 @keyframes livePulse{50%{opacity:.25}}
 .form{padding:10px 26px 4px;display:grid;gap:14px}
@@ -268,8 +280,33 @@ svg.chart{width:100%;height:auto;display:block}
 .reset:hover{color:var(--ink2);background:#fff}
 
 /* Mascota quieta en la esquina que sigue el cursor con la mirada */
-#mascot{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:120px;height:120px;pointer-events:none;z-index:40;filter:drop-shadow(0 8px 10px rgba(14,28,47,.22))}
+#mascot{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:120px;height:120px;z-index:40;filter:drop-shadow(0 8px 10px rgba(14,28,47,.22));background:none;border:0;padding:0;cursor:pointer;border-radius:24px}
+#mascot:hover{transform:translateY(-3px)}
+#mascot:focus-visible{outline:3px solid var(--primary-line);outline-offset:4px}
 #mascot .m-inner{width:100%;height:100%}
+#mascot-hint{position:fixed;right:calc(150px + env(safe-area-inset-right,0px));bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:40;background:#0f2c4f;color:#fff;font-weight:600;font-size:.92rem;padding:9px 14px;border-radius:14px 14px 4px 14px;box-shadow:var(--shadow);animation:pop .25s ease;pointer-events:none}
+
+/* Chat con Loti */
+#chat{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(146px + env(safe-area-inset-bottom,0px));z-index:45;width:min(400px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 230px));display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(14,28,47,.22);overflow:hidden;animation:pop .2s ease}
+#chat[hidden]{display:none}
+.chat-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:#0f2c4f;color:#fff}
+.chat-h b{display:block;font-size:1.05rem}
+.chat-h span{font-size:.8rem;color:#a9c3e3}
+.chat-h .icon-btn{background:rgba(255,255,255,.12);color:#fff}
+.chat-log{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-height:120px}
+.msg{max-width:88%;padding:10px 13px;border-radius:14px;font-size:.93rem;line-height:1.45}
+.msg.bot{background:var(--line2);color:var(--ink);border-bottom-left-radius:4px;align-self:flex-start}
+.msg.me{background:var(--primary);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.msg ul{margin:6px 0 0;padding-left:18px}
+.msg li{margin:3px 0}
+.msg.typing{color:var(--muted);letter-spacing:2px}
+.chat-sugg{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:0 16px 10px;scrollbar-width:thin}
+.chat-sugg .chip{flex:none}
+.chat-sugg .chip{font-size:.82rem;padding:6px 11px}
+.chat-f{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+.chat-f input{flex:1;min-width:0;font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.chat-f input:focus{outline:2px solid var(--primary-line);border-color:var(--primary)}
+.chat-f .btn{padding:10px 14px}
 #mascot .pupil{transition:transform .08s linear}
 #mascot svg{width:100%;height:100%;display:block;overflow:visible}
 #mascot .arm,#mascot .m-body{transform-box:view-box}
@@ -287,7 +324,7 @@ svg.chart{width:100%;height:auto;display:block}
 @keyframes spark{0%,100%{opacity:0}20%,70%{opacity:1}}
 @media (pointer:coarse){#mascot{display:none}}
 
-@media (max-width:1100px){.g4{grid-template-columns:1fr 1fr}.g-dash,.g2{grid-template-columns:1fr}.today{display:none}}
+@media (max-width:1100px){.g4{grid-template-columns:1fr 1fr}.g-dash,.g2,.g-trend{grid-template-columns:1fr}.today{display:none}}
 @media (max-width:760px){html{font-size:15px}.topbar-in{height:auto;flex-wrap:wrap;padding:10px 16px;gap:10px}main{padding:18px 16px 70px}.g4{grid-template-columns:1fr}.steps{grid-template-columns:1fr;gap:16px;text-align:left}.step::before{display:none}.lot-head{flex-direction:column}.lot-actions{align-items:flex-start}.table-scroll{overflow-x:auto}.modal-b{padding-left:26px}.field-row{grid-template-columns:1fr}}
 </style>
 </head>
@@ -299,7 +336,7 @@ svg.chart{width:100%;height:auto;display:block}
 <div id="drawer-root"></div>
 <div id="toasts"></div>
 <div id="chart-tip"></div>
-<div id="mascot" aria-hidden="true"><div class="m-inner">
+<button id="mascot" type="button" aria-label="Preguntale a Loti" title="Preguntale a Loti"><div class="m-inner">
 <svg viewBox="0 0 240 240">
   <defs>
     <g id="lm-arm">
@@ -348,7 +385,14 @@ svg.chart{width:100%;height:auto;display:block}
     </g>
   </g>
 </svg>
-</div></div>
+</div></button>
+<div id="mascot-hint" hidden>¿Dudas? Preguntame</div>
+<section id="chat" hidden aria-label="Chat con Loti">
+  <div class="chat-h"><div><b>Loti</b><span>Tu asistente de trazabilidad</span></div><button type="button" class="icon-btn" id="chat-close" aria-label="Cerrar chat"></button></div>
+  <div class="chat-log" id="chat-log" aria-live="polite"></div>
+  <div class="chat-sugg" id="chat-sugg"></div>
+  <form class="chat-f" id="chat-form"><input id="chat-in" autocomplete="off" placeholder="Escribí tu pregunta…"><button class="btn btn-primary" type="submit" aria-label="Enviar">Enviar</button></form>
+</section>
 
 <!-- Claves de EmailJS: viven en config.js, que no se sube a GitHub ni se publica (ver config.example.js) -->
 <script src="config.js"></script>
@@ -670,7 +714,7 @@ function viewTablero() {
   return `
   <div class="page-head"><div><h1>Tablero de trazabilidad</h1><div class="sub">De la fábrica a la góndola, en tiempo real · ${PLANT}</div></div>
     ${S.profile === 'calidad' ? `<button class="btn btn-primary" id="new-lot-btn">${icon('box', 18)}Registrar lote</button>` : ''}</div>
-  ${S.profile === 'gerencia' ? moneyRow() : ''}
+  ${S.profile === 'gerencia' ? moneyRow() + trendCard() : ''}
   <div class="grid g4">
     ${kpi('box', '', 'Lotes activos', S.lots.length, `${by('planta')} en planta · ${by('transito')} en tránsito · ${by('comercios')} en comercios${held ? ` · <b style="color:var(--warn)">${held} retenidos</b>` : ''}${recalls ? ` · <b style="color:var(--bad)">${recalls} en retiro</b>` : ''}`)}
     ${kpi('alert', open.length ? 'bad' : 'ok', 'Alertas abiertas', open.length, crit ? `<b style="color:var(--bad)">${plural(crit, 'crítica', 'críticas')}</b>` : recalls ? `${plural(recalls, 'retiro', 'retiros')} en curso` : 'Sin alertas críticas')}
@@ -687,6 +731,41 @@ function viewTablero() {
     </div>
   </div>`;
 }
+// Tendencia de las últimas 8 semanas (solo Gerencia). Historial de demo: Loti empieza a usarse en la semana 5.
+const TREND = [418, 392, 447, 405, 268, 214, 176, 71]; // miles de $ perdidos por vencimiento o cadena de frío
+const LOTI_START = 4; // índice de la primera semana con Loti
+function trendCard() {
+  const W = 720, H = 270, L = 52, R = 16, T = 34, B = 40, max = 500;
+  const weekStart = i => { const d = new Date(DAY0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) - (TREND.length - 1 - i) * 7); return d; };
+  const slot = (W - L - R) / TREND.length, bw = slot * 0.56;
+  const x = i => L + slot * i + (slot - bw) / 2;
+  const y = v => T + (1 - v / max) * (H - T - B);
+  let g = '';
+  [0, 100, 200, 300, 400, 500].forEach(v => {
+    g += `<line class="cs-grid" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text class="cs-ylab" x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  });
+  TREND.forEach((v, i) => {
+    const current = i === TREND.length - 1, after = i >= LOTI_START;
+    g += `<rect class="tr-bar ${after ? 'after' : ''} ${current ? 'current' : ''}" x="${x(i)}" y="${y(v)}" width="${bw}" height="${y(0) - y(v)}" rx="4"/>`;
+    g += `<text class="tr-val" x="${x(i) + bw / 2}" y="${y(v) - 7}" text-anchor="middle">${v}</text>`;
+    const d = weekStart(i);
+    g += `<text class="cs-xlab" x="${x(i) + bw / 2}" y="${H - B + 20}" text-anchor="middle">${current ? 'esta sem.' : `${d.getDate()} ${MO[d.getMonth()]}`}</text>`;
+  });
+  const sx = L + slot * LOTI_START;
+  g += `<line class="cs-sep" x1="${sx}" x2="${sx}" y1="${T - 18}" y2="${H - B}"/><text class="cs-stage" x="${sx + 8}" y="${T - 6}">Empieza Loti</text>`;
+  const before = TREND.slice(0, LOTI_START), done = TREND.slice(LOTI_START, -1);
+  const avg = a => a.reduce((s, v) => s + v, 0) / a.length;
+  const drop = Math.round((1 - avg(done) / avg(before)) * 100);
+  return `<div class="grid g-trend" style="margin-bottom:18px">
+    <div class="card"><div class="card-h"><h2>Pérdidas por vencimiento y cadena de frío</h2><span class="muted" style="font-size:.85rem">Miles de $ por semana · datos de demo</span></div>
+      <div class="card-b"><svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Pérdidas semanales, últimas 8 semanas">${g}</svg>
+      <div class="legend" style="margin-top:6px"><span><i class="sw" style="background:#b8c5d6"></i>Antes de Loti</span><span><i class="sw" style="background:var(--primary)"></i>Con Loti</span><span><i class="sw" style="background:var(--primary);opacity:.45"></i>Semana en curso</span></div></div></div>
+    <div class="card kpi" style="justify-content:center"><div class="kpi-top"><span class="kpi-ic ok">${icon('shield', 18)}</span>Desde que se usa Loti</div>
+      <div class="kpi-v" style="color:var(--ok)">−${drop} %</div>
+      <div class="kpi-s">de pérdidas por semana: de ${money(Math.round(avg(before)) * 1000)} a ${money(Math.round(avg(done)) * 1000)} en promedio.</div></div>
+  </div>`;
+}
+
 // Impacto económico (solo Gerencia)
 function moneyRow() {
   const atRisk = S.lots.filter(l => (l.excursion && !['bloqueado', 'retenido'].includes(l.status)) || daysLeft(l) < 3);
@@ -853,8 +932,10 @@ function viewLote(id) {
   </div>
   ${l.excursion && !blocked ? `<div class="callout bad"><span class="c-ic">${icon('alert', 20)}</span><div><b>Alerta crítica: ${excText(l.excursion)} en ${excWhere}</b>
     <div>${fmtD(l.excursion.from)}, de ${hhmm(l.excursion.from)} a ${hhmm(l.excursion.to)}. El rango permitido es de 2 a 8 °C y ${excNote}.</div></div></div>` : ''}
-  ${blocked ? `<div class="callout bad ${just}"><span class="c-ic">${icon('lock', 20)}</span><div><b>Lote bloqueado y en retiro</b>
-    <div>Se avisó a Calidad y a los ${plural(l.deliveries.length, 'comercio', 'comercios')} afectados. Nadie puede vender ni despachar este lote.</div></div></div>` : ''}
+  ${blocked ? `<div class="callout bad ${just}"><span class="c-ic">${icon('lock', 20)}</span><div style="flex:1"><b>Lote bloqueado y en retiro</b>
+    <div>Se avisó a Calidad y a los ${plural(l.deliveries.length, 'comercio', 'comercios')} afectados. Nadie puede vender ni despachar este lote.</div>
+    ${l.deliveries.length ? `<div class="progress"><div class="progress-t"><span>Retiro de góndola</span><b>${confirmedCount(l)} de ${l.deliveries.length} comercios confirmaron</b></div>
+      <div class="bar"><i style="width:${confirmedCount(l) / l.deliveries.length * 100}%"></i></div></div>` : ''}</div></div>` : ''}
   <div class="card mt"><div class="card-h"><h2>Recorrido del lote</h2></div>${lotSteps(l)}</div>
   <div class="card mt"><div class="card-h" style="flex-wrap:wrap"><h2>Temperatura en el tiempo</h2>
       <div class="legend"><span><i class="sw" style="background:rgba(34,165,101,.25)"></i>Rango 2–8 °C</span><span><i class="sw" style="background:var(--primary)"></i>Lectura cada 10 min</span>${l.excursion ? `<span><i class="sw" style="background:var(--bad)"></i>Fuera de rango</span>` : ''}${l.deliveries.length ? `<span><i class="sw" style="background:#fff;border:2px solid var(--primary);border-radius:50%;width:14px;height:14px"></i>Entrega en comercio</span>` : ''}</div></div>
@@ -870,10 +951,10 @@ function viewLote(id) {
       <dt>Conservación</dt><dd>Entre 2 y 8 °C</dd>
       <dt>Temperatura</dt><dd>${temps.length ? `Mín. ${t1(Math.min(...temps))} °C · Máx. <span style="color:${l.excursion ? 'var(--bad)' : 'inherit'}">${t1(Math.max(...temps))} °C</span>` : 'Sin lecturas'}</dd>
     </dl></div></div>
-    <div class="card"><div class="card-h"><h2>Dónde está el lote</h2><span class="muted" style="font-size:.88rem">${l.deliveries.length ? plural(l.deliveries.length, 'comercio', 'comercios') : ''}</span></div><div class="card-b">
+    <div class="card"><div class="card-h"><h2>Dónde está el lote</h2><span class="muted" style="font-size:.88rem">${!l.deliveries.length ? '' : blocked ? `${confirmedCount(l)} de ${l.deliveries.length} retiros confirmados` : plural(l.deliveries.length, 'comercio', 'comercios')}</span></div><div class="card-b">
       ${l.deliveries.length ? `<div class="stores">${l.deliveries.map((dv, i) => { const st = STORES[dv.store]; return `<div class="store"><span class="store-n">${i + 1}</span>
         <div class="store-main"><div class="store-name">${st.name}</div><div class="store-sub">${st.barrio}, ${st.depto} · entregado ${fmtD(dv.at)} ${hhmm(dv.at)}</div></div>
-        <span class="tnum muted">${num(dv.units)} u.</span>${blocked ? `<span class="badge b-bloqueado">Retiro pendiente</span>` : `<span class="badge b-ok">Entregado</span>`}</div>`; }).join('')}</div>`
+        <span class="tnum muted">${num(dv.units)} u.</span>${!blocked ? `<span class="badge b-ok">Entregado</span>` : dv.confirmedAt ? `<span class="badge b-ok">${icon('check', 13, 2.6)}Retirado ${hhmm(dv.confirmedAt)}</span>` : `<span class="badge b-bloqueado">Retiro pendiente</span>`}</div>`; }).join('')}</div>`
         : `<div class="muted">${l.loc === 'transito' ? `En ${TRUCKS[l.truck].name}, ${TRUCKS[l.truck].route}. Todavía no se entregó a comercios.` : `En ${PLANT}, ${l.place}. Todavía no salió de planta.`}</div>`}
     </div></div>
   </div>`;
@@ -968,6 +1049,22 @@ function applyBlock(l, params) {
   });
   S.justBlocked = l.id;
   setTimeout(() => { S.justBlocked = null; }, 1500);
+  // Para la demo: dos comercios (que no sean el que se va a mostrar) confirman solos al rato
+  l.deliveries.filter(d => d.store !== S.storeId).slice(0, 2)
+    .forEach((d, i) => setTimeout(() => { if (S.lots.includes(l)) confirmRecall(l, d.store, true); }, 6000 + i * 7000));
+}
+
+/* ===================== Confirmación de retiro ===================== */
+const confirmedCount = l => l.deliveries.filter(d => d.confirmedAt).length;
+function confirmRecall(l, storeId, silent = false) {
+  const dv = l.deliveries.find(d => d.store === storeId);
+  if (!dv || dv.confirmedAt) return;
+  dv.confirmedAt = new Date();
+  const k = confirmedCount(l), n = l.deliveries.length;
+  const a = S.alerts.find(x => x.lot === l.id && x.state === 'en_retiro');
+  if (a) a.text = `${a.text.split('.')[0]}. ${k === n ? 'Retiro completo: los' : `Retiro en curso: ${k} de`} ${n} comercios confirmaron que lo sacaron de góndola.`;
+  render();
+  if (!silent) { toast(`Retiro confirmado: Calidad ya lo ve (${k} de ${n} comercios)`); mascotFlex(); }
 }
 function toast(msg, kind = 'ok') {
   const el = document.createElement('div');
@@ -1104,7 +1201,7 @@ function viewLogistica() {
         <div style="margin-top:10px"><button class="btn btn-danger" id="halt-btn" data-truck="${tid}">${icon('lock', 16)}Frenar entregas y volver a planta</button></div></div>` : ''}
       ${halted ? `<div class="task ok"><b>Entregas frenadas ${fmtDT(halted)}</b><br>${num(units)} unidades vuelven a planta para control de Calidad. Ningún comercio recibió producto fuera de rango.</div>` : ''}
       ${exc.map(l => recall.includes(l)
-        ? `<div class="task bad"><b>Retiro en curso: ${l.id}</b><br>Pasar a recolectar por ${plural(l.deliveries.length, 'comercio', 'comercios')}: ${l.deliveries.map(d => STORES[d.store].name).join(', ')}.</div>`
+        ? `<div class="task bad"><b>Retiro en curso: ${l.id}</b><br>Pasar a recolectar por ${plural(l.deliveries.length, 'comercio', 'comercios')}: ${l.deliveries.map(d => STORES[d.store].name + (d.confirmedAt ? ' ✓' : '')).join(', ')}.${confirmedCount(l) ? ` ${confirmedCount(l)} ya lo sacaron de góndola (✓).` : ''}</div>`
         : `<div class="task bad"><b>Desvío de temperatura ${fmtD(l.excursion.from)}</b><br>${t1(l.excursion.max)} °C durante ${l.excursion.minutes} min, de ${hhmm(l.excursion.from)} a ${hhmm(l.excursion.to)} · <a href="#/lote/${l.id}" style="color:inherit;font-weight:700;text-decoration:underline">${l.id}</a></div>`).join('')}
     </div>`;
   }).join('');
@@ -1176,27 +1273,36 @@ function viewComercio() {
     .map(l => ({ l, dv: l.deliveries.find(d => d.store === S.storeId) }))
     .sort((a, b) => (b.l.status === 'bloqueado') - (a.l.status === 'bloqueado') || daysLeft(a.l) - daysLeft(b.l));
   const recalls = mine.filter(x => x.l.status === 'bloqueado');
+  const pending = recalls.filter(x => !x.dv.confirmedAt);
   const soon = mine.filter(x => daysLeft(x.l) <= 7 && x.l.status !== 'bloqueado');
   return `
   <div class="page-head"><div><h1>${st.name}</h1><div class="sub">${st.barrio}, ${st.depto} · lotes recibidos de ${PLANT}</div></div>
     <label class="store-pick"><span class="muted">Comercio</span><select id="store-sel">${Object.entries(STORES).map(([k, v]) => `<option value="${k}" ${k === S.storeId ? 'selected' : ''}>${v.name}</option>`).join('')}</select></label></div>
-  ${recalls.map(({ l, dv }) => `<div class="banner"><span class="b-ic">${icon('alert', 24)}</span><div>
+  ${recalls.map(({ l, dv }) => dv.confirmedAt
+    ? `<div class="banner ok"><span class="b-ic">${icon('check', 24, 2.6)}</span><div>
+      <h2>Retiro confirmado · Lote ${l.id} · ${l.product}</h2>
+      <p>Confirmaste ${fmtDT(dv.confirmedAt)} que sacaste de góndola las <b>${num(dv.units)} unidades</b>. Calidad ya lo ve. Logística pasa a recolectarlas en las próximas 24 horas.</p></div></div>`
+    : `<div class="banner"><span class="b-ic">${icon('alert', 24)}</span><div>
     <h2>Aviso de retiro · Lote ${l.id} · ${l.product}</h2>
     <p>Retirá ya de góndola las <b>${num(dv.units)} unidades</b> que recibiste el ${fmtD(dv.at)} y separalas en cámara como <b>“NO VENDER”</b>.</p>
-    <p>Motivo: se rompió la cadena de frío durante el transporte (${t1(l.excursion.max)} °C durante ${l.excursion.minutes} min). Logística pasa a recolectarlas en las próximas 24 horas.</p></div></div>`).join('')}
+    <p>Motivo: se rompió la cadena de frío durante el transporte (${excText(l.excursion)}). Logística pasa a recolectarlas en las próximas 24 horas.</p>
+    <button class="btn btn-banner" data-confirm="${l.id}">${icon('check', 18, 2.6)}Ya retiré las ${num(dv.units)} unidades</button></div></div>`).join('')}
   <div class="grid g4" style="grid-template-columns:repeat(3,1fr)">
     ${kpi('box', '', 'Lotes recibidos', mine.length, 'Últimos 30 días')}
     ${kpi('calendar', soon.length ? 'warn' : 'ok', 'Vencen en 7 días', soon.length, soon.length ? 'Revisá la góndola' : 'Nada por vencer')}
-    ${kpi('alert', recalls.length ? 'bad' : 'ok', 'Avisos de retiro', recalls.length, recalls.length ? '<b style="color:var(--bad)">Acción inmediata</b>' : 'Sin avisos')}
+    ${kpi('alert', pending.length ? 'bad' : 'ok', 'Avisos de retiro', pending.length, pending.length ? '<b style="color:var(--bad)">Acción inmediata</b>' : recalls.length ? 'Retiros confirmados' : 'Sin avisos')}
   </div>
   <div class="card mt"><div class="card-h"><h2>Lotes recibidos</h2></div>
     <div class="table-scroll"><table><thead><tr><th>Lote</th><th>Producto</th><th>Recibido</th><th>Unidades</th><th>Vence</th><th>Semáforo</th><th>Estado</th></tr></thead><tbody>
     ${mine.length ? mine.map(({ l, dv }) => `<tr class="${l.status === 'bloqueado' ? 'row-blocked' : ''}"><td class="lot-id">${l.id}</td><td>${l.product}</td><td class="tnum">${fmtD(dv.at)} · ${hhmm(dv.at)}</td><td class="tnum">${num(dv.units)}</td><td class="tnum">${fmtD(l.expires)}</td><td>${semaforo(daysLeft(l))}</td>
-      <td>${l.status === 'bloqueado' ? `<span class="badge b-bloqueado">${icon('lock', 14, 2.4)}Bloqueado – En retiro</span>` : `<span class="badge b-ok">Apto para venta</span>`}</td></tr>`).join('')
+      <td>${l.status !== 'bloqueado' ? `<span class="badge b-ok">Apto para venta</span>` : dv.confirmedAt ? `<span class="badge b-muted">${icon('check', 14, 2.6)}Retirado de góndola</span>` : `<span class="badge b-bloqueado">${icon('lock', 14, 2.4)}Bloqueado – En retiro</span>`}</td></tr>`).join('')
       : `<tr><td colspan="7" class="empty">Este comercio no recibió lotes en los últimos 30 días.</td></tr>`}
     </tbody></table></div></div>`;
 }
-function bindComercio() { document.getElementById('store-sel').onchange = e => { S.storeId = e.target.value; render(); }; }
+function bindComercio() {
+  document.getElementById('store-sel').onchange = e => { S.storeId = e.target.value; render(); };
+  document.querySelectorAll('[data-confirm]').forEach(b => b.onclick = () => confirmRecall(getLot(b.dataset.confirm), S.storeId));
+}
 
 /* ===================== Render ===================== */
 function render() {
@@ -1250,6 +1356,110 @@ function mascotFlex() {
   });
   (function flexLoop() { setTimeout(() => { mascotFlex(); flexLoop(); }, 6000 + Math.random() * 4000); })();
 })();
+
+/* ===================== Chat con Loti ===================== */
+// Chat simple: entiende palabras clave y responde con los datos que muestra la demo en ese momento
+const chatEl = document.getElementById('chat');
+let chatLog = [];
+const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const lotLink = l => S.profile === 'comercio' ? `<b>${l.id}</b>` : `<a href="#/lote/${l.id}">${l.id}</a>`;
+const statusText = l => ({ planta: 'en planta', transito: 'en tránsito', comercios: 'en comercios', bloqueado: 'bloqueado y en retiro', retenido: 'retenido, vuelve a planta' }[l.status]);
+const scopeLots = () => S.profile === 'comercio' ? S.lots.filter(l => l.deliveries.some(d => d.store === S.storeId)) : S.lots;
+const list = items => `<ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+
+function chatSuggestions() {
+  return S.profile === 'comercio'
+    ? ['¿Qué me vence esta semana?', '¿Tengo algún retiro pendiente?', '¿Qué lotes recibí?']
+    : ['¿Qué alertas hay abiertas?', '¿Qué vence esta semana?', '¿Cómo está el L-2411?', '¿Dónde está el Camión 2?', '¿Cuánta plata hay en riesgo?'];
+}
+function lotAnswer(l) {
+  const temps = l.temps.map(r => r.v);
+  let s = `<b>${l.id} · ${l.product}</b><br>Está ${statusText(l)} (${whereText(l)}). ${daysText(daysLeft(l))} (${fmtD(l.expires)}).`;
+  if (temps.length) s += `<br>Temperatura: mínima ${t1(Math.min(...temps))} °C, máxima ${t1(Math.max(...temps))} °C.`;
+  if (l.excursion) s += `<br><b>Ojo:</b> tuvo ${excText(l.excursion)} en ${excPlace(l)}, fuera del rango 2–8 °C.`;
+  if (l.status === 'bloqueado' && l.deliveries.length) s += `<br>Retiro: ${confirmedCount(l)} de ${l.deliveries.length} comercios confirmaron.`;
+  return s;
+}
+function truckAnswer(tid) {
+  const T = TRUCKS[tid], on = truckLots(tid), last = on[0] ? on[0].temps[on[0].temps.length - 1].v : 4.0;
+  const where = S.truckHalted[tid] ? 'Entregas frenadas: vuelve a planta.' : on.length ? `En ruta por ${T.route}${T.next ? `, próxima entrega en ${T.next}` : ''}.` : 'En base: ya completó su ruta.';
+  return `<b>${T.name}</b> · ${T.driver}<br>${where}<br>Temperatura ${on.length ? 'ahora' : 'en base'}: <b>${t1(last)} °C</b>${last > 8 ? ' (fuera de rango)' : ' (dentro de 2–8 °C)'}.${on.length ? `<br>Lleva ${on.map(lotLink).join(', ')}.` : ''}`;
+}
+function answer(q) {
+  const t = norm(q);
+  const lm = t.match(/l\s*-?\s*(\d{4})/);
+  if (lm) { const l = getLot(`L-${lm[1]}`); return l && scopeLots().includes(l) ? lotAnswer(l) : `No encuentro el lote L-${lm[1]}. Fijate el número, por ejemplo L-2411.`; }
+  const tm = t.match(/camion\s*(\d)/);
+  if (tm && TRUCKS[`T${tm[1]}`] && S.profile !== 'comercio') return truckAnswer(`T${tm[1]}`);
+  if (/retir|retiro|recall|bloque/.test(t)) {
+    if (S.profile === 'comercio') {
+      const p = scopeLots().filter(l => l.status === 'bloqueado' && !l.deliveries.find(d => d.store === S.storeId).confirmedAt);
+      return p.length ? `Sí: tenés que sacar de góndola ${list(p.map(l => `${lotLink(l)} · ${l.product} (${num(l.deliveries.find(d => d.store === S.storeId).units)} u.)`))}Cuando lo hagas, apretá "Ya retiré" en el aviso rojo.` : 'No tenés retiros pendientes. Todo lo que recibiste está apto para la venta.';
+    }
+    const b = S.lots.filter(l => l.status === 'bloqueado'), h = S.lots.filter(l => l.status === 'retenido');
+    if (!b.length && !h.length) return 'No hay retiros en curso. El L-2411 tiene un desvío de temperatura y está esperando que Calidad decida.';
+    return list([...b.map(l => `${lotLink(l)} · ${l.product}: bloqueado${l.deliveries.length ? `, ${confirmedCount(l)} de ${l.deliveries.length} comercios confirmaron el retiro` : ''}`),
+      ...h.map(l => `${lotLink(l)} · ${l.product}: retenido en ${TRUCKS[l.truck].name}, no llegó a ningún comercio`)]);
+  }
+  if (/venc|caduc|semana|por vencer/.test(t)) {
+    const s = scopeLots().filter(l => daysLeft(l) <= 7 && l.status !== 'bloqueado').sort((a, b) => daysLeft(a) - daysLeft(b));
+    if (!s.length) return 'Nada vence en los próximos 7 días.';
+    return `${plural(s.length, 'lote vence', 'lotes vencen')} en los próximos 7 días:${list(s.slice(0, 6).map(l => `${lotLink(l)} · ${l.product} — ${daysText(daysLeft(l)).toLowerCase()}`))}${s.length > 6 ? `Y ${s.length - 6} más en la pantalla Vencimientos.` : ''}`;
+  }
+  if (/alerta|problema|pasa|urgente/.test(t) && S.profile !== 'comercio') {
+    const o = S.alerts.filter(a => a.state === 'abierta');
+    return o.length ? `Hay ${plural(o.length, 'alerta abierta', 'alertas abiertas')}:${list(o.map(a => `${a.lot ? `${lotLink(getLot(a.lot))} · ` : ''}${a.title}${a.level === 'critica' ? ' <b>(crítica)</b>' : ''}`))}` : 'No hay alertas abiertas.';
+  }
+  if (/plata|valor|riesgo|pesos|\$|cuesta|perdida|dinero/.test(t) && S.profile !== 'comercio') {
+    const sum = ls => money(ls.reduce((a, l) => a + lotValue(l), 0));
+    const risk = S.lots.filter(l => (l.excursion && !['bloqueado', 'retenido'].includes(l.status)) || daysLeft(l) < 3);
+    const pulled = S.lots.filter(l => ['bloqueado', 'retenido'].includes(l.status));
+    return `Mercadería en riesgo: <b>${sum(risk)}</b> (${plural(risk.length, 'lote', 'lotes')}).<br>Fuera de la venta por retiro o retención: <b>${sum(pulled)}</b>.<br>Por vencer en 7 días: <b>${sum(S.lots.filter(l => daysLeft(l) <= 7 && !['bloqueado', 'retenido'].includes(l.status)))}</b>.`;
+  }
+  if (/temperatura|frio|cadena|grados/.test(t)) {
+    const ex = scopeLots().filter(l => l.excursion);
+    const pct = Math.round((S.lots.length - S.lots.filter(l => l.excursion).length) / S.lots.length * 100);
+    return `La cadena de frío se cumplió en el ${pct} % de los lotes.${ex.length ? ` Tuvieron desvío:${list(ex.map(l => `${lotLink(l)} · ${excText(l.excursion)} en ${excPlace(l)}`))}` : ' Ningún lote tuvo desvíos.'}`;
+  }
+  const store = Object.entries(STORES).find(([, s]) => t.includes(norm(s.name.split(' ').slice(-1)[0])) || t.includes(norm(s.barrio)));
+  if (store && S.profile !== 'comercio') {
+    const ls = S.lots.filter(l => l.deliveries.some(d => d.store === store[0]));
+    return `<b>${store[1].name}</b> (${store[1].barrio}) recibió ${plural(ls.length, 'lote', 'lotes')}:${list(ls.map(l => `${lotLink(l)} · ${l.product} — ${l.status === 'bloqueado' ? '<b>en retiro</b>' : daysText(daysLeft(l)).toLowerCase()}`))}`;
+  }
+  if (/recibi|tengo|mis lotes|lotes/.test(t)) {
+    const ls = scopeLots();
+    return `${S.profile === 'comercio' ? 'Recibiste' : 'Hay'} ${plural(ls.length, 'lote', 'lotes')}. Algunos:${list(ls.slice(0, 6).map(l => `${lotLink(l)} · ${l.product}`))}`;
+  }
+  if (/hola|buen|que tal|ayuda|quien sos/.test(t)) return '¡Hola! Soy Loti. Preguntame por un lote, los vencimientos, las alertas, un camión o los retiros.';
+  if (/gracias|genial|buenisimo/.test(t)) return '¡De nada! Para eso estoy.';
+  return 'No estoy seguro de haber entendido. Probá preguntarme por un lote (por ejemplo L-2411), los vencimientos, las alertas, un camión o los retiros.';
+}
+function renderChat() {
+  document.getElementById('chat-log').innerHTML = chatLog.map(m => `<div class="msg ${m.who}">${m.html}</div>`).join('');
+  document.getElementById('chat-sugg').innerHTML = chatSuggestions().map(s => `<button type="button" class="chip" data-q="${esc(s)}">${esc(s)}</button>`).join('');
+  document.querySelectorAll('#chat-sugg [data-q]').forEach(b => b.onclick = () => ask(b.dataset.q));
+  const log = document.getElementById('chat-log'); log.scrollTop = log.scrollHeight;
+}
+function ask(q) {
+  q = q.trim(); if (!q) return;
+  chatLog.push({ who: 'me', html: esc(q) }, { who: 'bot typing', html: '•••' });
+  renderChat();
+  setTimeout(() => { chatLog.pop(); chatLog.push({ who: 'bot', html: answer(q) }); renderChat(); }, 550);
+}
+function openChat() {
+  if (!chatLog.length) chatLog.push({ who: 'bot', html: `¡Hola! Soy Loti. ${S.profile === 'comercio' ? `Te ayudo con lo que recibió ${STORES[S.storeId].name}.` : 'Preguntame lo que quieras sobre lotes, vencimientos, camiones o retiros.'}` });
+  chatEl.hidden = false; document.getElementById('mascot-hint').hidden = true;
+  renderChat(); mascotFlex();
+  document.getElementById('chat-in').focus();
+}
+mascotEl.onclick = () => chatEl.hidden ? openChat() : (chatEl.hidden = true);
+document.getElementById('chat-close').innerHTML = icon('x', 18);
+document.getElementById('chat-close').onclick = () => { chatEl.hidden = true; };
+document.getElementById('chat-form').onsubmit = e => { e.preventDefault(); const i = document.getElementById('chat-in'); ask(i.value); i.value = ''; };
+resetBtn.addEventListener('click', () => { chatLog = []; chatEl.hidden = true; });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') chatEl.hidden = true; });
+// Pista para que el público sepa que se puede hablar con Loti
+setTimeout(() => { const h = document.getElementById('mascot-hint'); if (chatEl.hidden) { h.hidden = false; setTimeout(() => { h.hidden = true; }, 6000); } }, 2500);
 
 render();
 </script>

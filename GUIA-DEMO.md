@@ -101,15 +101,16 @@ Antes de empezar: perfil **Calidad / Producción**, pantalla **Tablero**, demo r
 | 9 | Señalá el aviso y el lote en rojo | "Siete destinatarios avisados. El lote queda bloqueado en todas las vistas: nadie lo puede vender ni despachar." |
 | 10 | Clic en el **sobre** (arriba a la derecha) | "Y queda registrado qué se avisó, a quién y cuándo. Esto es oro para una auditoría." |
 | 11 | Selector **Viendo como → Comercio** | "Ahora soy el encargado del Supermercado El Trébol. Abro el sistema y lo primero que veo es esto: aviso de retiro, cuántas unidades, qué hacer." |
-| 12 | Señalá la tabla de lotes | "Y además veo qué me vence esta semana. La leche de mañana ya la tengo en rojo." |
+| 12 | Clic en **Ya retiré las 240 unidades** | "Saco el yogur de la góndola y lo confirmo acá. Calidad ya lo ve: van 3 de 6 comercios." *(Otros dos comercios confirman solos unos segundos después del bloqueo.)* |
 | 13 | Selector **Viendo como → Logística**, clic en **Simular falla de frío en Camión 2** | "Pero lo mejor es que esto no llegue a pasar. Este es el Camión 2, en ruta ahora mismo." *(La temperatura sube sola en el gráfico; en 5 segundos salta la alerta roja.)* |
 | 14 | Clic en **Frenar entregas y volver a planta** | "Loti avisa antes de la próxima entrega. Un clic, y ningún comercio recibe producto fuera de rango. Pasamos de reaccionar a evitar." |
-| 15 | Selector **Viendo como → Gerencia** | "Y Gerencia lo ve en plata: cuánto hay en riesgo, cuánto se sacó de la venta y 156 mil pesos de mercadería que frenamos antes de entregarla." |
+| 15 | Selector **Viendo como → Gerencia** | "Y Gerencia lo ve en plata: 156 mil pesos de mercadería que frenamos antes de entregarla. Y en el gráfico, desde que se usa Loti las pérdidas semanales bajaron casi a la mitad." |
 | 16 | *(Cierre)* | "Del teléfono descompuesto a minutos. Loti: dónde está cada lote, a qué temperatura estuvo y cuándo vence, de la fábrica a la góndola." |
 
 Los pasos 13 a 15 suman unos 50 segundos. Si te pasás de 3 minutos, acortá los pasos 6 y 12.
 
 Si sobra tiempo:
+- **Chat con Loti:** clic en la mascota y elegí una pregunta sugerida, por ejemplo "¿Cómo está el L-2411?" o "¿Qué vence esta semana?". Responde con los datos de la pantalla en ese momento. También entiende preguntas escritas sobre lotes, vencimientos, alertas, camiones, retiros, plata y comercios (por ejemplo "¿qué tiene La Esquina?").
 - **Registrar lote** (Calidad, botón azul del Tablero): das de alta un lote en vivo. Si cargás una temperatura de control mayor a 8 °C, sale con alerta.
 - **Vencimientos:** el semáforo de lo que vence en planta y en comercios.
 
