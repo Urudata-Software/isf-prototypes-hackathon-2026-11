@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <title>Loti, la caja superhéroe</title>
+  <g stroke="#2a1a10" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Capa -->
+    <path d="M86 74 L176 66 L206 204 Q140 222 46 206 Z" fill="#1b5ea6"/>
+    <path d="M96 80 L166 74 L188 196 Q140 208 66 198 Z" fill="#2f78c8" stroke="none"/>
+
+    <!-- Brazo izquierdo: bíceps flexionado -->
+    <g id="brazo">
+      <path d="M88 98 C74 66 30 70 22 102 C18 124 44 136 70 128 C80 126 86 120 90 116 Z" fill="#e8913a"/>
+      <path d="M40 92 C42 102 52 110 68 106" fill="none" stroke-width="3"/>
+      <path d="M50 80 Q58 76 66 80" fill="none" stroke="#f9c46b" stroke-width="3"/>
+      <path d="M24 108 C14 92 16 72 26 58 L48 64 C42 78 42 94 48 110 Z" fill="#e8913a"/>
+      <circle cx="36" cy="52" r="15" fill="#2f86e0"/>
+      <path d="M28 46 Q34 40 42 42" fill="none" stroke="#bfe0ff" stroke-width="3"/>
+    </g>
+    <!-- Brazo derecho (espejo) -->
+    <use href="#brazo" transform="translate(246 0) scale(-1 1)"/>
+
+    <!-- Piernas y zapatillas -->
+    <path d="M102 174 L96 204 M140 174 L146 204" fill="none" stroke-width="10"/>
+    <ellipse cx="88" cy="208" rx="18" ry="9" fill="#1f5fae"/>
+    <ellipse cx="154" cy="208" rx="18" ry="9" fill="#1f5fae"/>
+    <path d="M74 213 H102 M140 213 H168" fill="none" stroke="#ffffff" stroke-width="3"/>
+
+    <!-- Caja -->
+    <path d="M74 80 L90 64 L188 64 L172 80 Z" fill="#f9c46b"/>
+    <path d="M116 80 L132 64 L146 64 L130 80 Z" fill="#fce3a8" stroke-width="2"/>
+    <path d="M172 80 L188 64 L188 162 L172 178 Z" fill="#d9822b"/>
+    <rect x="74" y="80" width="98" height="98" rx="6" fill="#f4a23c"/>
+
+    <!-- Antifaz con cintas al viento -->
+    <path d="M170 104 L204 90 L198 104 L208 116 L170 114 Z" fill="#0f2c4f"/>
+    <path d="M78 106 Q123 86 168 106 L170 118 Q123 132 76 118 Z" fill="#0f2c4f"/>
+    <ellipse cx="103" cy="110" rx="11" ry="9" fill="#ffffff" stroke-width="3"/>
+    <ellipse cx="143" cy="110" rx="11" ry="9" fill="#ffffff" stroke-width="3"/>
+    <circle cx="106" cy="111" r="4.5" fill="#2a1a10" stroke="none"/>
+    <circle cx="146" cy="111" r="4.5" fill="#2a1a10" stroke="none"/>
+
+    <!-- Cejas decididas -->
+    <path d="M88 92 L114 99 M158 92 L132 99" fill="none" stroke-width="6"/>
+
+    <!-- Sonrisa -->
+    <path d="M104 136 Q123 156 142 136 Z" fill="#8a2323"/>
+    <path d="M110 139 H136" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <circle cx="90" cy="134" r="6" fill="#f07f5e" stroke="none" opacity=".55"/>
+    <circle cx="156" cy="134" r="6" fill="#f07f5e" stroke="none" opacity=".55"/>
+
+    <!-- Etiqueta con código de barras -->
+    <rect x="82" y="152" width="40" height="18" rx="3" fill="#ffffff" stroke-width="3"/>
+    <path d="M88 156 V164 M92 156 V164 M95 156 V164 M100 156 V164 M103 156 V164 M108 156 V164 M112 156 V164 M116 156 V164" fill="none" stroke-width="2"/>
+    <path d="M88 167 H116" fill="none" stroke="#2f86e0" stroke-width="2.5"/>
+
+    <!-- Emblema copo de nieve -->
+    <circle cx="152" cy="160" r="12" fill="#2f86e0" stroke-width="3"/>
+    <path d="M152 152 V168 M145 156 L159 164 M159 156 L145 164" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+  </g>
+</svg>
