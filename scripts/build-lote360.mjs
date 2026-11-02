@@ -1,5 +1,5 @@
-// Arma la carpeta dist/ que publica Render: la demo como index.html y un config.js
-// generado con las claves de EmailJS que se cargan en el dashboard de Render.
+// Arma la carpeta dist/ que publica Vercel: la demo como index.html y un config.js
+// generado con las claves de EmailJS que se cargan en Settings → Environment Variables.
 import { mkdirSync, copyFileSync, writeFileSync } from "node:fs";
 
 const env = process.env;

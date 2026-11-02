@@ -62,18 +62,21 @@ Calidad · Lote360
 
 Variables que envía la demo: `to_email`, `lote`, `producto`, `incidente`, `comercios`, `accion`, `fecha_hora`.
 
-### Publicarla en Render (URL pública, con mail real)
+### Publicarla en Vercel (URL pública, con mail real)
 
-1. En **dashboard.render.com**: **New → Blueprint** y elegí el repositorio `Urudata-Software/isf-prototypes-hackathon-2026-11`.
-2. Render lee el `render.yaml` y te pide cuatro valores. Cargá los mismos que en `config.js`:
+1. En **vercel.com**: **Add New → Project** e importá el repositorio `Urudata-Software/isf-prototypes-hackathon-2026-11`.
+2. Dejá **Root Directory** en la raíz (`./`) y **Framework Preset** en *Other*. El resto lo toma del `vercel.json` del repo.
+3. Abrí **Environment Variables** y cargá los mismos valores que en `config.js`:
    - `EMAILJS_PUBLIC_KEY`, `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`
    - `DEMO_RECIPIENTS`: los mails separados por coma.
-3. **Apply**. En uno o dos minutos queda en una dirección como `https://lote360.onrender.com`.
-4. En EmailJS: **Account → Security → Domains**, agregá esa dirección. Así nadie puede usar tus claves desde otro sitio.
+4. **Deploy**. En menos de un minuto queda en una dirección como `https://isf-prototypes-hackathon-2026-11.vercel.app`.
+5. En EmailJS: **Account → Security → Domains**, agregá esa dirección. Así nadie puede usar tus claves desde otro sitio.
 
-En un sitio público las claves de EmailJS quedan visibles para quien inspeccione la página. EmailJS está pensado para eso; la protección es el paso 4 y mandar los mails solo a casillas del equipo.
+En un sitio público las claves de EmailJS quedan visibles para quien inspeccione la página. EmailJS está pensado para eso; la protección es el paso 5 y mandar los mails solo a casillas del equipo.
 
-Cada vez que se sube un cambio a GitHub, Render vuelve a publicar la demo solo. Si cambiás una clave en Render, hacé **Manual Deploy** para que tome el valor nuevo.
+Cada vez que se sube un cambio a GitHub, Vercel vuelve a publicar la demo solo. Si cambiás una clave, andá a **Deployments → ⋯ → Redeploy** para que tome el valor nuevo.
+
+Si al entrar Vercel te pide iniciar sesión, desactivá **Settings → Deployment Protection → Vercel Authentication**, así el jurado la abre sin cuenta.
 
 ---
 
