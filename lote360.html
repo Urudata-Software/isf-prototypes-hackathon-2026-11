@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lote360</title>
+<title>Loti</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@ button{font:inherit;cursor:pointer}
 .topbar-in{max-width:1360px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;gap:28px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;letter-spacing:-.01em;color:#fff}
 .brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3f8fd8,#1b5ea6);display:grid;place-items:center}
-.brand small{display:block;font-size:.68rem;font-weight:500;color:#a9c3e3;letter-spacing:0}
+.brand small{display:block;font-size:.68rem;font-weight:500;color:#a9c3e3;letter-spacing:0;white-space:nowrap}
 .nav{display:flex;gap:4px;flex:1}
 .nav a{color:#c9daef;padding:9px 14px;border-radius:9px;font-weight:600;display:flex;align-items:center;gap:8px;font-size:.95rem}
 .nav a:hover{background:rgba(255,255,255,.08);color:#fff}
@@ -350,7 +350,7 @@ const TRUCKS = {
   T2: { name: 'Camión 2', route: 'Ruta Montevideo Centro', driver: 'Lucía Ferreira', plate: 'SBC 2280', stops: '1 de 4 entregas' },
   T3: { name: 'Camión 3', route: 'Ruta Montevideo Este', driver: 'Diego Pereira', plate: 'SBD 9035', stops: 'Ruta completada' },
 };
-const QUALITY = { name: 'Calidad · Planta Canelones', email: 'calidad@lote360.demo' };
+const QUALITY = { name: 'Calidad · Planta Canelones', email: 'calidad@loti.demo' };
 const PLANT = 'Planta Canelones';
 
 // dte = días hasta vencer
@@ -480,7 +480,7 @@ function renderTopbar() {
   const r = route(); const p = PROFILES[S.profile];
   const active = r.name === 'lote' ? 'tablero' : r.name;
   document.getElementById('topbar').innerHTML = `
-    <a class="brand" href="${p.home}"><span class="brand-mark">${icon('snow', 20, 2.2)}</span><span>Lote360<small>Trazabilidad en frío</small></span></a>
+    <a class="brand" href="${p.home}"><span class="brand-mark">${icon('snow', 20, 2.2)}</span><span>Loti<small>Trazabilidad en frío</small></span></a>
     <nav class="nav">${p.nav.map(k => `<a href="#/${k}" class="${active === k ? 'active' : ''}">${icon(NAV[k].icon, 18)}${NAV[k].label}</a>`).join('')}</nav>
     <div class="top-right">
       <span class="today">${WDL[NOW.getDay()]} ${NOW.getDate()} de ${MOL[NOW.getMonth()]}</span>
@@ -765,22 +765,22 @@ Qué hacer ahora:
 2. Separarlas en cámara, identificadas como "NO VENDER".
 3. Esperar la recolección de Logística (dentro de las próximas 24 horas).
 
-Calidad · Lote360`,
+Calidad · Loti`,
   };
 }
 function emailConfigured() {
   return Object.values(EMAILJS_CONFIG).every(v => v && !v.startsWith('TU_')) && DEMO_RECIPIENTS && !/[\[\]]|\.\.\./.test(DEMO_RECIPIENTS);
 }
 async function sendRecallEmail(params) {
-  if (!emailConfigured()) { console.warn('[Lote360] EmailJS no está configurado: no se envió el mail real (la demo sigue igual).'); return; }
-  if (!window.emailjs) { console.warn('[Lote360] El SDK de EmailJS no cargó (¿sin conexión?). La demo sigue igual.'); return; }
+  if (!emailConfigured()) { console.warn('[Loti] EmailJS no está configurado: no se envió el mail real (la demo sigue igual).'); return; }
+  if (!window.emailjs) { console.warn('[Loti] El SDK de EmailJS no cargó (¿sin conexión?). La demo sigue igual.'); return; }
   try {
     emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
     const timeout = new Promise((_, rej) => setTimeout(() => rej(new Error(`El envío tardó más de ${EMAIL_TIMEOUT_MS / 1000} s`)), EMAIL_TIMEOUT_MS));
     const res = await Promise.race([emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, params), timeout]);
-    console.info('[Lote360] Mail enviado por EmailJS:', res);
+    console.info('[Loti] Mail enviado por EmailJS:', res);
   } catch (err) {
-    console.error('[Lote360] Falló el envío del mail (la demo sigue igual):', err);
+    console.error('[Loti] Falló el envío del mail (la demo sigue igual):', err);
   }
 }
 function openBlockModal(id) {
@@ -836,7 +836,7 @@ function openLog() {
       <div class="mail-body">${esc(n.body)}</div></div>`).join('')
     : `<div class="empty">${icon('mail', 34, 1.6)}<div style="margin-top:8px">Todavía no se envió ninguna notificación.</div></div>`;
   root.innerHTML = `<div class="drawer-ov" id="dov"></div><aside class="drawer" role="dialog" aria-label="Registro de notificaciones">
-    <div class="drawer-h"><div><h2 style="font-size:1.3rem">Registro de notificaciones</h2><div class="sub">Mails enviados desde Lote360</div></div><button class="icon-btn" id="dclose" aria-label="Cerrar">${icon('x', 20)}</button></div>
+    <div class="drawer-h"><div><h2 style="font-size:1.3rem">Registro de notificaciones</h2><div class="sub">Mails enviados desde Loti</div></div><button class="icon-btn" id="dclose" aria-label="Cerrar">${icon('x', 20)}</button></div>
     <div class="drawer-b">${list}</div></aside>`;
   const close = () => root.innerHTML = '';
   document.getElementById('dov').onclick = close; document.getElementById('dclose').onclick = close;

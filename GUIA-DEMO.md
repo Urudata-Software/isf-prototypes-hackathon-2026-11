@@ -1,4 +1,4 @@
-# Lote360 · Guía de la demo
+# Loti · Guía de la demo
 
 Archivo de la demo: `lote360.html`. Se abre con doble clic. No necesita servidor.
 
@@ -12,7 +12,7 @@ Archivo de la demo: `lote360.html`. Se abre con doble clic. No necesita servidor
 2. **Email Services → Add New Service → Gmail** (u Outlook). Conectá una casilla de la que no te importe enviar, por ejemplo una cuenta del equipo. Copiá el **Service ID** (ejemplo: `service_abc123`).
 3. **Email Templates → Create New Template**. Completá:
    - **To Email:** `{{to_email}}` ← **tiene que ser exactamente esto**, si no el mail no llega a nadie.
-   - **From Name:** `Lote360 · Calidad`
+   - **From Name:** `Loti · Calidad`
    - **Subject** y **Content:** copiá los textos de abajo.
    - Guardá y copiá el **Template ID** (ejemplo: `template_xyz789`).
 4. **Account → General → Public Key**: copiala.
@@ -57,7 +57,7 @@ Qué hacer ahora:
 2. Separarlas en cámara, identificadas como "NO VENDER".
 3. Esperar la recolección de Logística (dentro de las próximas 24 horas).
 
-Calidad · Lote360
+Calidad · Loti
 ```
 
 Variables que envía la demo: `to_email`, `lote`, `producto`, `incidente`, `comercios`, `accion`, `fecha_hora`.
@@ -90,7 +90,7 @@ Antes de empezar: perfil **Calidad / Producción**, pantalla **Tablero**, demo r
 
 | # | Clic | Qué decís |
 |---|---|---|
-| 1 | *(Tablero, sin tocar nada)* | "Esto es Lote360. Una sola pantalla donde fábrica, logística, gerencia y comercios ven lo mismo: dónde está cada lote, a qué temperatura estuvo y cuándo vence." |
+| 1 | *(Tablero, sin tocar nada)* | "Esto es Loti. Una sola pantalla donde fábrica, logística, gerencia y comercios ven lo mismo: dónde está cada lote, a qué temperatura estuvo y cuándo vence." |
 | 2 | Señalá las 4 tarjetas | "Quince lotes activos, cuatro alertas abiertas, siete que vencen esta semana. Y un 93 % de cumplimiento de la cadena de frío. Ese 7 % que falta es nuestra historia de hoy." |
 | 3 | Clic en la alerta roja **L-2411** | "Hoy esta alerta llega por WhatsApp, tarde y de tercera mano. Acá, Calidad la ve al instante." |
 | 4 | Señalá el **Recorrido del lote** | "Este es el yogur bebible de frutilla, lote 2411. Se fabricó en Planta Canelones, se empacó, pasó por la cámara, salió en el Camión 3 por la ruta Montevideo Este y hoy está en seis comercios." |
@@ -102,7 +102,7 @@ Antes de empezar: perfil **Calidad / Producción**, pantalla **Tablero**, demo r
 | 10 | Clic en el **sobre** (arriba a la derecha) | "Y queda registrado qué se avisó, a quién y cuándo. Esto es oro para una auditoría." |
 | 11 | Selector **Viendo como → Comercio** | "Ahora soy el encargado del Supermercado El Trébol. Abro el sistema y lo primero que veo es esto: aviso de retiro, cuántas unidades, qué hacer." |
 | 12 | Señalá la tabla de lotes | "Y además veo qué me vence esta semana. La leche de mañana ya la tengo en rojo." |
-| 13 | *(Cierre)* | "Del teléfono descompuesto a minutos. Lote360: dónde está cada lote, a qué temperatura estuvo y cuándo vence, de la fábrica a la góndola." |
+| 13 | *(Cierre)* | "Del teléfono descompuesto a minutos. Loti: dónde está cada lote, a qué temperatura estuvo y cuándo vence, de la fábrica a la góndola." |
 
 Si sobra tiempo: **Vencimientos** (semáforo) o **Logística** (el Camión 3 ya tiene la tarea de recolectar en los seis comercios).
 
