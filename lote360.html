@@ -280,31 +280,44 @@ svg.chart{width:100%;height:auto;display:block}
 .reset:hover{color:var(--ink2);background:#fff}
 
 /* Mascota quieta en la esquina que sigue el cursor con la mirada */
-#mascot{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:120px;height:120px;z-index:40;filter:drop-shadow(0 8px 10px rgba(14,28,47,.22));background:none;border:0;padding:0;cursor:pointer;border-radius:24px}
-#mascot:hover{transform:translateY(-3px)}
+#mascot{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:120px;height:120px;z-index:46;filter:drop-shadow(0 8px 10px rgba(14,28,47,.22));background:none;border:0;padding:0;cursor:pointer;border-radius:24px;transition:transform .8s cubic-bezier(.34,1.3,.5,1)}
+#mascot .m-inner{transition:transform .2s ease}
+#mascot:hover .m-inner{transform:translateY(-3px)}
+#mascot .m-cape{transition:opacity .35s ease}
+#mascot.open .m-cape{opacity:0}
+#mascot.flying .m-inner{animation:whoosh .8s ease}
+@keyframes whoosh{0%{transform:none}25%{transform:translateY(6px) scale(1.05,.92)}45%{transform:rotate(-16deg) translateY(-8px)}75%{transform:rotate(8deg)}100%{transform:none}}
 #mascot:focus-visible{outline:3px solid var(--primary-line);outline-offset:4px}
 #mascot .m-inner{width:100%;height:100%}
 #mascot-hint{position:fixed;right:calc(150px + env(safe-area-inset-right,0px));bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:40;background:#0f2c4f;color:#fff;font-weight:600;font-size:.92rem;padding:9px 14px;border-radius:14px 14px 4px 14px;box-shadow:var(--shadow);animation:pop .25s ease;pointer-events:none}
 
 /* Chat con Loti */
-#chat{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(146px + env(safe-area-inset-bottom,0px));z-index:45;width:min(400px,calc(100vw - 32px));max-height:min(560px,calc(100vh - 230px));display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(14,28,47,.22);overflow:hidden;animation:pop .2s ease}
+#chat{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:45;width:min(540px,calc(100vw - 48px));height:min(660px,calc(100vh - 190px));display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 60px rgba(14,28,47,.28);overflow:hidden}
+#chat::before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;background:linear-gradient(160deg,#2f78c8,#1b5ea6)}
+#chat.opening{animation:capeOpen .7s cubic-bezier(.2,.8,.2,1)}
+#chat.opening::before{animation:capeFade .8s ease forwards}
+#chat.closing{animation:capeClose .45s ease-in forwards}
+#chat.closing::before{animation:capeFade .45s ease reverse forwards}
+@keyframes capeOpen{from{clip-path:circle(0% at 88% 100%)}to{clip-path:circle(150% at 88% 100%)}}
+@keyframes capeClose{from{clip-path:circle(150% at 88% 100%)}to{clip-path:circle(0% at 88% 100%)}}
+@keyframes capeFade{0%,45%{opacity:1}100%{opacity:0}}
 #chat[hidden]{display:none}
-.chat-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:#0f2c4f;color:#fff}
-.chat-h b{display:block;font-size:1.05rem}
-.chat-h span{font-size:.8rem;color:#a9c3e3}
+.chat-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 18px 16px 112px;min-height:68px;background:linear-gradient(135deg,#2f78c8,#1b5ea6);color:#fff}
+.chat-h b{display:block;font-size:1.2rem}
+.chat-h span{font-size:.85rem;color:#d6e6f8}
 .chat-h .icon-btn{background:rgba(255,255,255,.12);color:#fff}
-.chat-log{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-height:120px}
-.msg{max-width:88%;padding:10px 13px;border-radius:14px;font-size:.93rem;line-height:1.45}
+.chat-log{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12px;min-height:120px}
+.msg{max-width:88%;padding:12px 15px;border-radius:16px;font-size:1rem;line-height:1.5}
 .msg.bot{background:var(--line2);color:var(--ink);border-bottom-left-radius:4px;align-self:flex-start}
 .msg.me{background:var(--primary);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
 .msg ul{margin:6px 0 0;padding-left:18px}
 .msg li{margin:3px 0}
 .msg.typing{color:var(--muted);letter-spacing:2px}
-.chat-sugg{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:0 16px 10px;scrollbar-width:thin}
+.chat-sugg{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding:0 20px 12px;scrollbar-width:thin}
 .chat-sugg .chip{flex:none}
-.chat-sugg .chip{font-size:.82rem;padding:6px 11px}
-.chat-f{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
-.chat-f input{flex:1;min-width:0;font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.chat-sugg .chip{font-size:.9rem;padding:8px 13px}
+.chat-f{display:flex;gap:10px;padding:14px 20px;border-top:1px solid var(--line)}
+.chat-f input{flex:1;min-width:0;font:inherit;font-size:1rem;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .chat-f input:focus{outline:2px solid var(--primary-line);border-color:var(--primary)}
 .chat-f .btn{padding:10px 14px}
 #mascot .pupil{transition:transform .08s linear}
@@ -349,8 +362,10 @@ svg.chart{width:100%;height:auto;display:block}
     </g>
   </defs>
   <g stroke="#2a1a10" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M86 74 L176 66 L206 204 Q140 222 46 206 Z" fill="#1b5ea6"/>
-    <path d="M96 80 L166 74 L188 196 Q140 208 66 198 Z" fill="#2f78c8" stroke="none"/>
+    <g class="m-cape">
+      <path d="M86 74 L176 66 L206 204 Q140 222 46 206 Z" fill="#1b5ea6"/>
+      <path d="M96 80 L166 74 L188 196 Q140 208 66 198 Z" fill="#2f78c8" stroke="none"/>
+    </g>
     <g class="arm arm-l"><use href="#lm-arm"/></g>
     <g class="arm arm-r"><g transform="translate(246 0) scale(-1 1)"><use href="#lm-arm"/></g></g>
     <g class="spark" fill="none" stroke="#f0a400" stroke-width="4">
@@ -1446,18 +1461,38 @@ function ask(q) {
   renderChat();
   setTimeout(() => { chatLog.pop(); chatLog.push({ who: 'bot', html: answer(q) }); renderChat(); }, 550);
 }
+// Al abrir, Loti vuela hasta el borde de arriba del chat y su capa se despliega como el chat
+function perchMascot() {
+  if (chatEl.hidden || chatEl.classList.contains('closing')) { mascotEl.style.transform = ''; return; }
+  const p = chatEl.getBoundingClientRect(), r = mascotEl.offsetWidth;
+  const restLeft = innerWidth - parseFloat(getComputedStyle(mascotEl).right) - r;
+  const restTop = innerHeight - parseFloat(getComputedStyle(mascotEl).bottom) - r;
+  // escalada a 0,8 desde el centro: queda sentada sobre la esquina superior izquierda del chat
+  mascotEl.style.transform = `translate(${p.left - 4 - restLeft}px, ${p.top - 88 - restTop}px) scale(.8)`;
+}
+function fly() { mascotEl.classList.remove('flying'); void mascotEl.offsetWidth; mascotEl.classList.add('flying'); setTimeout(() => mascotEl.classList.remove('flying'), 850); }
 function openChat() {
   if (!chatLog.length) chatLog.push({ who: 'bot', html: `¡Hola! Soy Loti. ${S.profile === 'comercio' ? `Te ayudo con lo que recibió ${STORES[S.storeId].name}.` : 'Preguntame lo que quieras sobre lotes, vencimientos, camiones o retiros.'}` });
-  chatEl.hidden = false; document.getElementById('mascot-hint').hidden = true;
-  renderChat(); mascotFlex();
-  document.getElementById('chat-in').focus();
+  document.getElementById('mascot-hint').hidden = true;
+  chatEl.classList.remove('closing'); chatEl.hidden = false;
+  chatEl.classList.add('opening'); setTimeout(() => chatEl.classList.remove('opening'), 850);
+  mascotEl.classList.add('open'); fly(); perchMascot();
+  renderChat();
+  setTimeout(() => document.getElementById('chat-in').focus(), 300);
 }
-mascotEl.onclick = () => chatEl.hidden ? openChat() : (chatEl.hidden = true);
+function closeChat() {
+  if (chatEl.hidden || chatEl.classList.contains('closing')) return;
+  chatEl.classList.remove('opening'); chatEl.classList.add('closing');
+  mascotEl.classList.remove('open'); fly(); perchMascot();
+  setTimeout(() => { chatEl.hidden = true; chatEl.classList.remove('closing'); }, 450);
+}
+mascotEl.onclick = () => chatEl.hidden ? openChat() : closeChat();
 document.getElementById('chat-close').innerHTML = icon('x', 18);
-document.getElementById('chat-close').onclick = () => { chatEl.hidden = true; };
+document.getElementById('chat-close').onclick = closeChat;
 document.getElementById('chat-form').onsubmit = e => { e.preventDefault(); const i = document.getElementById('chat-in'); ask(i.value); i.value = ''; };
-resetBtn.addEventListener('click', () => { chatLog = []; chatEl.hidden = true; });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') chatEl.hidden = true; });
+resetBtn.addEventListener('click', () => { chatLog = []; closeChat(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeChat(); });
+addEventListener('resize', perchMascot);
 // Pista para que el público sepa que se puede hablar con Loti
 setTimeout(() => { const h = document.getElementById('mascot-hint'); if (chatEl.hidden) { h.hidden = false; setTimeout(() => { h.hidden = true; }, 6000); } }, 2500);
 
