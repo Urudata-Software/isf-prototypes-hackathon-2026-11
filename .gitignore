@@ -65,3 +65,4 @@ __pycache__/
 # Claves locales de la demo Lote360
 config.js
 .vs/
+dist/

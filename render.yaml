@@ -1,0 +1,24 @@
+services:
+  # Demo Lote360 de la hackatón: un sitio estático con un solo HTML.
+  # Publica solo dist/ (index.html + config.js), nunca el resto del repo.
+  - type: web
+    name: lote360
+    runtime: static
+    buildCommand: node scripts/build-lote360.mjs
+    staticPublishPath: ./dist
+    # La demo no debe quedar cacheada vieja después de un cambio
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    envVars:
+      # sync: false = el valor se carga a mano en el dashboard de Render, no viaja
+      # en este archivo ni en el repo.
+      - key: EMAILJS_PUBLIC_KEY
+        sync: false
+      - key: EMAILJS_SERVICE_ID
+        sync: false
+      - key: EMAILJS_TEMPLATE_ID
+        sync: false
+      - key: DEMO_RECIPIENTS
+        sync: false

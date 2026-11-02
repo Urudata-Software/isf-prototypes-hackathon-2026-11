@@ -62,6 +62,19 @@ Calidad · Lote360
 
 Variables que envía la demo: `to_email`, `lote`, `producto`, `incidente`, `comercios`, `accion`, `fecha_hora`.
 
+### Publicarla en Render (URL pública, con mail real)
+
+1. En **dashboard.render.com**: **New → Blueprint** y elegí el repositorio `Urudata-Software/isf-prototypes-hackathon-2026-11`.
+2. Render lee el `render.yaml` y te pide cuatro valores. Cargá los mismos que en `config.js`:
+   - `EMAILJS_PUBLIC_KEY`, `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`
+   - `DEMO_RECIPIENTS`: los mails separados por coma.
+3. **Apply**. En uno o dos minutos queda en una dirección como `https://lote360.onrender.com`.
+4. En EmailJS: **Account → Security → Domains**, agregá esa dirección. Así nadie puede usar tus claves desde otro sitio.
+
+En un sitio público las claves de EmailJS quedan visibles para quien inspeccione la página. EmailJS está pensado para eso; la protección es el paso 4 y mandar los mails solo a casillas del equipo.
+
+Cada vez que se sube un cambio a GitHub, Render vuelve a publicar la demo solo. Si cambiás una clave en Render, hacé **Manual Deploy** para que tome el valor nuevo.
+
 ---
 
 ## 2. Guion de 3 minutos
