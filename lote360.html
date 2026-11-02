@@ -30,6 +30,7 @@ button{font:inherit;cursor:pointer}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;letter-spacing:-.01em;color:#fff}
 .brand-mark{width:52px;height:52px;border-radius:12px;background:#e7f0fa;display:grid;place-items:center;overflow:hidden}
 .brand-mark img{width:50px;height:50px;display:block}
+.brand .wordmark{height:42px;width:auto;display:block}
 .brand small{display:block;font-size:.68rem;font-weight:500;color:#a9c3e3;letter-spacing:0;white-space:nowrap}
 .nav{display:flex;gap:4px;flex:1}
 .nav a{color:#c9daef;padding:9px 14px;border-radius:9px;font-weight:600;display:flex;align-items:center;gap:8px;font-size:.95rem}
@@ -350,8 +351,8 @@ const DEMO_RECIPIENTS = LOCAL_CONFIG.recipients || "[mail1@...], [mail2@...]";
 // Tiempo máximo de espera del envío antes de seguir con la demo
 const EMAIL_TIMEOUT_MS = 5000;
 
-/* ===================== Logo (assets/loti-logo.svg) ===================== */
-const LOGO_URI = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJib3JkZSIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzNhOTVlYSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzdhNGZmMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnIHN0cm9rZT0idXJsKCNib3JkZSkiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTUwIDYgTDkwIDI5IEw1MCA1MiBMMTAgMjkgWiIgZmlsbD0iIzRiMjY5MSIvPjxwYXRoIGQ9Ik0xMCAyOSBMNTAgNTIgTDUwIDk2IEwxMCA3MyBaIiBmaWxsPSIjMGYzYTVmIi8+PHBhdGggZD0iTTUwIDUyIEw5MCAyOSBMOTAgNzMgTDUwIDk2IFoiIGZpbGw9IiNmZmZmZmYiLz48L2c+PC9zdmc+";
+/* ===================== Logo (assets/loti-wordmark.svg) ===================== */
+const LOGO_URI = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjUyIDYwIDM0MCAxODQiIHdpZHRoPSIzNDAiIGhlaWdodD0iMTg0Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9Imx3LWJvcmRlIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjExMCIgeTE9Ijk2IiB4Mj0iMjMwIiB5Mj0iMjM1Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMzZThiZjAiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2NzU5ZjEiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cGF0aCBkPSJNNjkuNSA2NiBWMjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMTYiLz48ZyBzdHJva2U9InVybCgjbHctYm9yZGUpIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNzAgOTcgTDIzMCAxMzEgTDE3MCAxNjYgTDExMCAxMzEgWiIgZmlsbD0iIzRiMjU5MCIvPjxwYXRoIGQ9Ik0xMTAgMTMxIEwxNzAgMTY2IEwxNzAgMjM0IEwxMTAgMjAwIFoiIGZpbGw9IiMwZDNhNWUiLz48cGF0aCBkPSJNMTcwIDE2NiBMMjMwIDEzMSBMMjMwIDIwMCBMMTcwIDIzNCBaIiBmaWxsPSJub25lIi8+PC9nPjxwYXRoIGQ9Ik0yODEuNSA4MiBWMTg4IFEyODEuNSAyMjIgMzEwIDIyMiBRMzM2IDIyMiAzMzcgMTk4IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMTUiLz48cGF0aCBkPSJNMjQ5IDEyNCBIMzQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMTMiLz48cGF0aCBkPSJNMzY2LjUgMTE4IFYyMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIxNiIvPjxjaXJjbGUgY3g9IjM2NyIgY3k9Ijg1IiByPSIxMS41IiBmaWxsPSJub25lIiBzdHJva2U9IiMzYWEzZWEiIHN0cm9rZS13aWR0aD0iNSIvPjwvc3ZnPg==";
 
 /* ===================== Íconos ===================== */
 const ICONS = {
@@ -555,7 +556,7 @@ function renderTopbar() {
   const r = route(); const p = PROFILES[S.profile];
   const active = r.name === 'lote' ? 'tablero' : r.name;
   document.getElementById('topbar').innerHTML = `
-    <a class="brand" href="${p.home}"><span class="brand-mark"><img src="${LOGO_URI}" alt=""></span><span>Loti<small>Trazabilidad en frío</small></span></a>
+    <a class="brand" href="${p.home}"><img class="wordmark" src="${LOGO_URI}" alt="Loti"></a>
     <nav class="nav">${p.nav.map(k => `<a href="#/${k}" class="${active === k ? 'active' : ''}">${icon(NAV[k].icon, 18)}${NAV[k].label}</a>`).join('')}</nav>
     <div class="top-right">
       <span class="today">${WDL[NOW.getDay()]} ${NOW.getDate()} de ${MOL[NOW.getMonth()]}</span>

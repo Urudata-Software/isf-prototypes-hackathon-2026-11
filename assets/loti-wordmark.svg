@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="52 60 340 184" width="340" height="184">
+  <defs>
+    <linearGradient id="lw-borde" gradientUnits="userSpaceOnUse" x1="110" y1="96" x2="230" y2="235">
+      <stop offset="0" stop-color="#3e8bf0"/>
+      <stop offset="1" stop-color="#6759f1"/>
+    </linearGradient>
+  </defs>
+  <!-- l -->
+  <path d="M69.5 66 V230" fill="none" stroke="#ffffff" stroke-width="16"/>
+  <!-- o: el cubo (la cara derecha es transparente) -->
+  <g stroke="url(#lw-borde)" stroke-width="8" stroke-linejoin="round">
+    <path d="M170 97 L230 131 L170 166 L110 131 Z" fill="#4b2590"/>
+    <path d="M110 131 L170 166 L170 234 L110 200 Z" fill="#0d3a5e"/>
+    <path d="M170 166 L230 131 L230 200 L170 234 Z" fill="none"/>
+  </g>
+  <!-- t -->
+  <path d="M281.5 82 V188 Q281.5 222 310 222 Q336 222 337 198" fill="none" stroke="#ffffff" stroke-width="15"/>
+  <path d="M249 124 H340" fill="none" stroke="#ffffff" stroke-width="13"/>
+  <!-- i con el punto como anillo -->
+  <path d="M366.5 118 V230" fill="none" stroke="#ffffff" stroke-width="16"/>
+  <circle cx="367" cy="85" r="11.5" fill="none" stroke="#3aa3ea" stroke-width="5"/>
+</svg>
