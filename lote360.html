@@ -349,7 +349,7 @@ svg.chart{width:100%;height:auto;display:block}
 <div id="drawer-root"></div>
 <div id="toasts"></div>
 <div id="chart-tip"></div>
-<button id="mascot" type="button" aria-label="Preguntale a Loti" title="Preguntale a Loti"><div class="m-inner">
+<button id="mascot" type="button" aria-label="Preguntale a Cartoncito" title="Preguntale a Cartoncito"><div class="m-inner">
 <svg viewBox="0 0 240 240">
   <defs>
     <g id="lm-arm">
@@ -403,7 +403,7 @@ svg.chart{width:100%;height:auto;display:block}
 </div></button>
 <div id="mascot-hint" hidden>¿Dudas? Preguntame</div>
 <section id="chat" hidden aria-label="Chat con Loti">
-  <div class="chat-h"><div><b>Loti</b><span>Tu asistente de trazabilidad</span></div><button type="button" class="icon-btn" id="chat-close" aria-label="Cerrar chat"></button></div>
+  <div class="chat-h"><div><b>Cartoncito</b><span>El asistente de Loti</span></div><button type="button" class="icon-btn" id="chat-close" aria-label="Cerrar chat"></button></div>
   <div class="chat-log" id="chat-log" aria-live="polite"></div>
   <div class="chat-sugg" id="chat-sugg"></div>
   <form class="chat-f" id="chat-form"><input id="chat-in" autocomplete="off" placeholder="Escribí tu pregunta…"><button class="btn btn-primary" type="submit" aria-label="Enviar">Enviar</button></form>
@@ -1402,6 +1402,9 @@ function truckAnswer(tid) {
 }
 function answer(q) {
   const t = norm(q);
+  const bare = t.replace(/[¿?¡!.,]/g, '').trim();
+  if (/te llam|tu nombre|quien (sos|eres)|nombre de la (mascota|cajita|caja)/.test(bare) || /^como se llama( (la mascota|el asistente|el chat|la caja|la cajita|esto))?$/.test(bare))
+    return '¡Me llamo <b>Cartoncito</b>! Soy la caja superhéroe de Loti: cuido la cadena de frío de cada lote, de la fábrica a la góndola.';
   const lm = t.match(/l\s*-?\s*(\d{4})/);
   if (lm) { const l = getLot(`L-${lm[1]}`); return l && scopeLots().includes(l) ? lotAnswer(l) : `No encuentro el lote L-${lm[1]}. Fijate el número, por ejemplo L-2411.`; }
   const tm = t.match(/camion\s*(\d)/);
@@ -1445,7 +1448,7 @@ function answer(q) {
     const ls = scopeLots();
     return `${S.profile === 'comercio' ? 'Recibiste' : 'Hay'} ${plural(ls.length, 'lote', 'lotes')}. Algunos:${list(ls.slice(0, 6).map(l => `${lotLink(l)} · ${l.product}`))}`;
   }
-  if (/hola|buen|que tal|ayuda|quien sos/.test(t)) return '¡Hola! Soy Loti. Preguntame por un lote, los vencimientos, las alertas, un camión o los retiros.';
+  if (/hola|buen|que tal|ayuda/.test(t)) return '¡Hola! Soy Cartoncito. Preguntame por un lote, los vencimientos, las alertas, un camión o los retiros.';
   if (/gracias|genial|buenisimo/.test(t)) return '¡De nada! Para eso estoy.';
   return 'No estoy seguro de haber entendido. Probá preguntarme por un lote (por ejemplo L-2411), los vencimientos, las alertas, un camión o los retiros.';
 }
@@ -1472,7 +1475,7 @@ function perchMascot() {
 }
 function fly() { mascotEl.classList.remove('flying'); void mascotEl.offsetWidth; mascotEl.classList.add('flying'); setTimeout(() => mascotEl.classList.remove('flying'), 850); }
 function openChat() {
-  if (!chatLog.length) chatLog.push({ who: 'bot', html: `¡Hola! Soy Loti. ${S.profile === 'comercio' ? `Te ayudo con lo que recibió ${STORES[S.storeId].name}.` : 'Preguntame lo que quieras sobre lotes, vencimientos, camiones o retiros.'}` });
+  if (!chatLog.length) chatLog.push({ who: 'bot', html: `¡Hola! Soy Cartoncito. ${S.profile === 'comercio' ? `Te ayudo con lo que recibió ${STORES[S.storeId].name}.` : 'Preguntame lo que quieras sobre lotes, vencimientos, camiones o retiros.'}` });
   document.getElementById('mascot-hint').hidden = true;
   chatEl.classList.remove('closing'); chatEl.hidden = false;
   chatEl.classList.add('opening'); setTimeout(() => chatEl.classList.remove('opening'), 850);
